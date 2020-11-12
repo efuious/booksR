@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">books</string>
+    <string name="home">推荐</string>
+    <string name="library">书库</string>
+    <string name="profile">我的</string>
+    <string name="t_RToday">今日推荐</string>
+    <string name="t_RMy">私人推荐</string>
+    <string name="t_RTip">小tip</string>
+    <string name="t_RHistory">历史上的今天</string>
+    <string name="t_LLibaray">浏览书架</string>
+    <string name="t_LBorrow">我的借阅</string>
+    <string name="t_LSearch">搜索</string>
+    <string name="t_LFavorites">收藏夹</string>
+    <string name="t_LNew">最近上新</string>
+    <string name="t_Pmytag">我的tag</string>
+    <string name="t_Plogin">登录</string>
+    <string name="t_Plogout">登出</string>
+    <string name="t_Pchangetag">修改tag</string>
+    <string name="t_Pchangeprofile">修改个人信息</string>
+</resources>

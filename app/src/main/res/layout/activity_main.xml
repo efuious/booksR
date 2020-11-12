@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/navi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        tools:layout_editor_absoluteX="0"
+        tools:layout_editor_absoluteY="0">
+
+        <Button
+            android:id="@+id/homePage"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home"
+            tools:layout_editor_absoluteX="46dp"
+            tools:layout_editor_absoluteY="109dp" />
+        <Button
+            android:id="@+id/secondPage"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/library"
+            tools:layout_editor_absoluteX="46dp"
+            tools:layout_editor_absoluteY="109dp" />
+        <Button
+            android:id="@+id/thridPage"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            tools:layout_editor_absoluteX="46dp"
+            tools:layout_editor_absoluteY="109dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navi_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:text="DEMO"
+            android:textSize="30dp"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        app:layout_constraintTop_toBottomOf="@id/navi"
+        app:layout_constraintBottom_toTopOf="@+id/navi_bottom"
+        android:id="@+id/viewpage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

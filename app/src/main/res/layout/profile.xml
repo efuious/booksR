@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:textsize="http://schemas.android.com/tools">
+
+    <!-- 个人信息栏-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <!-- 头像 -->
+        <ImageView
+            android:id="@+id/mypic"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!-- ID栏 -->
+        <LinearLayout
+            android:id="@+id/id_blank"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            android:paddingLeft="@dimen/t_tag_padding_left"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/t_myid"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/t_textview_size"
+                android:text="ID: "
+                />
+            <TextView
+                android:id="@+id/myid"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:text="000000"
+                />
+        </LinearLayout>
+
+        <!-- 姓名栏 -->
+        <LinearLayout
+            android:id="@+id/name_blank"
+            app:layout_constraintTop_toBottomOf="@id/id_blank"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            android:paddingLeft="@dimen/t_tag_padding_left"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/t_myname"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/t_textview_size"
+                android:text="姓名: "
+                />
+            <TextView
+                android:id="@+id/myname"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:text="name"
+                />
+        </LinearLayout>
+        <!--性别-->
+        <LinearLayout
+            android:id="@+id/sex_blank"
+            app:layout_constraintTop_toBottomOf="@id/name_blank"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            android:paddingLeft="@dimen/t_tag_padding_left"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/t_mysex"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/t_textview_size"
+                android:text="性别: "
+                />
+            <TextView
+                android:id="@+id/mysex"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:text="boy"
+                />
+        </LinearLayout>
+        <!-- 年龄栏 -->
+        <LinearLayout
+            android:id="@+id/birthday_blank"
+            app:layout_constraintTop_toBottomOf="@id/sex_blank"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            android:paddingLeft="@dimen/t_tag_padding_left"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/t_mybirthday"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="@dimen/t_textview_size"
+                android:text="生日: "
+                />
+            <TextView
+                android:id="@+id/mybirthday"
+                android:textSize="@dimen/text_size"
+                android:layout_height="wrap_content"
+                android:layout_width="140dp"
+                android:text="1998-10-16"
+                />
+        </LinearLayout>
+        <!-- 修改信息Button -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            android:layout_marginLeft="@dimen/t_tag_padding_left"
+            app:layout_constraintTop_toBottomOf="@id/birthday_blank"
+            android:text="@string/t_Pchangeprofile" />
+        <!-- tag栏 -->
+        <LinearLayout
+            android:id="@+id/mytag_blank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mypic"
+            >
+            <TextView
+                android:id="@+id/t_mytag"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="@string/t_Pmytag"
+                android:textSize="@dimen/text_size" />
+            <!-- tag栏第一行 -->
+            <LinearLayout
+                android:id="@+id/mytag_blank_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/t_mytag"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <Button
+                    android:id="@+id/mytag1"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+                <Button
+                    android:id="@+id/mytag2"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+                <Button
+                    android:id="@+id/mytag3"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+            </LinearLayout>
+            <!-- tag栏第二行 -->
+            <LinearLayout
+                android:id="@+id/mytag_blank_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/t_mytag"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent">
+
+                <Button
+                    android:id="@+id/mytag4"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+                <Button
+                    android:id="@+id/mytag5"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+                <Button
+                    android:id="@+id/mytag6"
+                    android:text="@string/t_Pchangetag"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/t_mytag_height"
+                    android:layout_width="0dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!-- 登录按钮 -->
+        <Button
+            android:id="@+id/login"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mytag_blank"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/t_Plogin" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
