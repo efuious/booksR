@@ -8,18 +8,16 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/navi"
+        android:id="@+id/main_navi"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="3"
-        tools:layout_editor_absoluteX="0"
-        tools:layout_editor_absoluteY="0">
+        android:weightSum="3">
 
         <Button
-            android:id="@+id/homePage"
+            android:id="@+id/main_homePage"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +25,7 @@
             tools:layout_editor_absoluteX="46dp"
             tools:layout_editor_absoluteY="109dp" />
         <Button
-            android:id="@+id/secondPage"
+            android:id="@+id/main_library"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +33,7 @@
             tools:layout_editor_absoluteX="46dp"
             tools:layout_editor_absoluteY="109dp" />
         <Button
-            android:id="@+id/thridPage"
+            android:id="@+id/main_profile"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,21 +43,31 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/navi_bottom"
+        android:id="@+id/main_navi_search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <TextView
-            android:text="DEMO"
-            android:textSize="30dp"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <EditText
+            android:hint="@string/t_search_library"
+            android:textSize="@dimen/text_size"
+            android:layout_weight="8"
+            android:layout_height="@dimen/input_height"
+            android:layout_width="0dp" />
+        <Button
+            android:id="@+id/main_search"
+            android:layout_weight="2"
+            android:layout_height="@dimen/input_height"
+            android:layout_width="0dp"
+            android:text="@string/t_search"
+            />
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager
-        app:layout_constraintTop_toBottomOf="@id/navi"
-        app:layout_constraintBottom_toTopOf="@+id/navi_bottom"
+        app:layout_constraintTop_toBottomOf="@id/main_navi_search"
+        app:layout_constraintBottom_toTopOf="@+id/main_navi"
         android:id="@+id/viewpage"
         android:layout_width="match_parent"
         android:layout_height="0dp" />

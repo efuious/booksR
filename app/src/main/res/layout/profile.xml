@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <!-- 头像 -->
         <ImageView
             android:id="@+id/mypic"
@@ -122,14 +123,30 @@
                 android:text="1998-10-16"
                 />
         </LinearLayout>
+        <!-- toolbar -->
+        <LinearLayout
+            android:id="@+id/profile_toolbar"
+            android:orientation="horizontal"
+            app:layout_constraintLeft_toRightOf="@id/mypic"
+            app:layout_constraintTop_toBottomOf="@id/birthday_blank"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content">
         <!-- 修改信息Button -->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/mypic"
             android:layout_marginLeft="@dimen/t_tag_padding_left"
-            app:layout_constraintTop_toBottomOf="@id/birthday_blank"
             android:text="@string/t_Pchangeprofile" />
+        <!-- 设置按钮 -->
+        <ImageButton
+            android:id="@+id/profile_setting_btn"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="@dimen/t_tag_padding_left"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ico_setting" />
+        </LinearLayout>
         <!-- tag栏 -->
         <LinearLayout
             android:id="@+id/mytag_blank"
@@ -206,12 +223,12 @@
         </LinearLayout>
         <!-- 登录按钮 -->
         <Button
-            android:id="@+id/login"
+            android:id="@+id/profile_login_btn"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mytag_blank"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/t_Plogin" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,19 +8,9 @@
     tools:context=".History">
 
     <TextView
-        android:id="@+id/textview"
+        android:id="@+id/history_textview"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="请先登录！"
         />
-    <EditText
-        android:id="@+id/ip"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:text="" />
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="连接数据库"/>
 </LinearLayout>
