@@ -1,105 +1,176 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import net.sf.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
-public class DB_Demo extends AppCompatActivity implements View.OnClickListener{
+public class DB_Demo {
 
-    EditText ip;
-    Button sqlbutton;
-    TextView textView;
+    private List<String> data = new LinkedList<>();
+    private List<JSONObject> jsonObject = new LinkedList<>();
+    private  boolean loginFlag = false;
+    private Context context;
 
-    String username = "username";
-    String password = "password";
-    String DBName   = "PyQt_db";
-    String url_front = "jdbc:jtds:sqlserver://";
-    String port = ":1433/";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_db__demo);
-        init();
+    public DB_Demo(Context con){
+        context = con;
+        System.out.println("初始化数据库模型...MyDatabase");
     }
 
-    public void init(){
-        ip = findViewById(R.id.edittext);
-        sqlbutton = findViewById(R.id.sqlbutton);
-        sqlbutton.setOnClickListener(this);
-        textView = findViewById(R.id.textview);
+    public List<JSONObject>get_table(String sqlmode){
+        final String mode = sqlmode;
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _gettable(mode);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+        return jsonObject;
     }
 
-    public void login(){
-        String ip_str = ip.getText().toString();
-        String url = url_front+ip_str+port+DBName;
+    private void  _gettable(String mode){
+        System.out.println("开始连接");
+        String strUrl="http://10.253.6.251:8080/whale/test?"+mode;
+        System.out.println(strUrl);
+        URL url = null;
+        try{
+            url=new URL(strUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            List<JSONObject> result = new LinkedList<>();
+            String readLine = null;
+            System.out.println("_gettable开始解析内容...");
+            while((readLine=br.readLine())!=null) {
+                readLine = readLine.substring(1, readLine.length() - 1);
+                jsonObject = new Whale().String2Jsons(readLine);
+//                for(int i = 0;i<result.size();i++){
+//                System.out.println(result.get(i).getString("title"));}
+//                jsonObject.add(result);
+            }
+            in.close();
+            urlConnection.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        Connection con = null;
+    public List<String> get_data(String sqlmode){
+        final String mode = sqlmode;
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _getdata(mode);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+        return data;
+    }
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+    private void _getdata(String mode) {
+        System.out.println("开始连接");
+        String strUrl="http://10.253.6.251:8080/whale/test?"+mode;
+        System.out.println(strUrl);
+        URL url = null;
+        try{
+            url=new URL(strUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String result = "";
+            String readLine = null;
+            System.out.println("开始解析内容...");
+            while((readLine=br.readLine())!=null){
+                result=readLine+"\n";
+                data.add(result);
+                System.out.println(readLine);
+            }
+            in.close();
+            urlConnection.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public boolean get_user(String id, String pswd){
+        loginFlag = false;
+        System.out.println("开始获取用户数据...");
+        final String loginId = id;
+        final String loginPswd = pswd;
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _getuser(loginId,loginPswd);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        return loginFlag;
+    }
+
+    private void _getuser(String id, String pswd){
+        System.out.println("开始连接");
+        String strUrl="http://10.253.6.251:8080/whale/test?param1=login&param2="+id+"&param3="+pswd;
+        System.out.println(strUrl);
+        URL url = null;
         try {
-            System.out.println("加载数据库驱动...");
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            System.out.println("加载数据库驱动完成！");
-
-//            Toast.makeText(this,url,Toast.LENGTH_SHORT).show();
-
-            con = DriverManager.getConnection(url, username, password);
-            textView.setText("连接成功！");
-            if(con == null){
-                textView.setText("连接失败！");
+            url = new URL(strUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            String result = "";
+            JSONObject json  = new JSONObject();
+            result = br.readLine();
+            if (result.isEmpty() || result.equals("{}") || result.equals("null")){
+                System.out.println("认证失败！");
+            }else {
+                System.out.println("认证成功！:->"+result+"<-");
+                json = new Whale().String2Json(result);
+                MyDatabase localdb = new MyDatabase(this.context);
+                SQLiteDatabase usertable = localdb.getWritableDatabase();
+                localdb.add_data(usertable,json.getInt("id"),json.getString("username"),json.getInt("sex"),json.getString("birthday"),json.getString("pswd"));
+                loginFlag = true;
             }
-            else{
-                textView.setText("连接成功！");
-            }
-        } catch (ClassNotFoundException e) {
-            textView.setText("类错误！");
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-        } catch (SQLException e) {
-            textView.setText("SQL错误！");
-            e.printStackTrace();
-        } catch (Exception e){
-            textView.setText("其它错误！");
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        if (con != null){
-            Statement statement = null;
-            try {
-                statement = con.createStatement();
-                ResultSet resultSet = statement.executeQuery("Select * from history;");
-                while (resultSet.next()){
-                    textView.setText(resultSet.getString(2));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        else {
-            textView.setText("Connection is null");
-        }
-//        return con;
     }
 
-    @Override
-    public void onClick(View view){
-        if (view.getId()==R.id.sqlbutton){
-            login();
-        }
-    }
+
 }
