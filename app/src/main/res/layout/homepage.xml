@@ -25,7 +25,8 @@
                     android:id="@+id/RToday"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/recommend" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -39,13 +40,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="10dp"
-            android:orientation="vertical"
-            android:src="@mipmap/ic_launcher" >
+            android:orientation="vertical">
             <ImageButton
                 android:id="@+id/RMy"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/myrecommend"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,7 +74,8 @@
                 android:id="@+id/RTip"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside"
+                android:src="@drawable/tip" />
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -92,7 +94,8 @@
                 android:id="@+id/Rhistory"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside"
+                android:src="@drawable/history" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
