@@ -1,122 +1,92 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.widget.Toast;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class MyDatabase implements Serializable {
-    String username = "username";
-    String password = "password";
-    String DBName   = "PyQt_db";
-    String url_front = "jdbc:jtds:sqlserver://";
-    String port = ":1433/";
-    String ip = "";
-    private Connection con;
 
-    public MyDatabase(String ip){
-        this.ip = ip;
-        con = null;
-        System.out.println("初始化数据库模型...MyDatabase");
+public class MyDatabase extends SQLiteOpenHelper {
+
+    public MyDatabase(Context context) {
+        super(context, "user_db", null, 1);
     }
 
-    public Connection renewIP(String ip){
-        this.ip = ip;
-        System.out.println("已更新IP...MyDatabase");
-        return login();
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String sql = "create table user(id integer,name varchar(20),sex int,birthday varchar(22),pswd varchar(40))";
+        db.execSQL(sql);
     }
 
-    public Connection login(){
-        String url = this.url_front+this.ip+this.port+this.DBName;
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+    public void add_data(SQLiteDatabase db,int id, String username, int sex, String birthday,String pswd){
+        delete_all(db);
+        System.out.println("开始为本地数据库添加数据...");
+        ContentValues values = new ContentValues();
+        values.put("id",id);
+        values.put("name", username);
+        values.put("sex", sex);
+        values.put("birthday",birthday );
+        values.put("pswd",pswd);
+        db.insert("user", null, values);
+        db.close();
+    }
 
-        try {
-            System.out.println("加载数据库驱动...");
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            System.out.println("加载数据库驱动完成！");
-            System.out.println("开始连接数据库..."+this.ip);
-            con = DriverManager.getConnection(url, username, password);
-            System.out.println("连接成功！");
-            if(con == null){
-                System.out.println("连接失败！");
-            }
-            else{
-                System.out.println("连接成功！");
-            }
-        } catch (ClassNotFoundException e) {
-            System.out.println("类错误！");
-            e.printStackTrace();
-        } catch (SQLException e) {
-            System.out.println("SQL错误！");
-            e.printStackTrace();
-        } catch (Exception e){
-            System.out.println("其它错误！");
-            e.printStackTrace();
+    private void delete_all(SQLiteDatabase db) {
+        db.delete("user",null,null);
+//        db.close();
+    }
+
+    public void ____delete_all(SQLiteDatabase db){
+        db.delete("user",null,null);
+        db.close();
+    }
+
+    public void update(SQLiteDatabase db,int id, String username, int sex, String birthday,String pswd) {
+            System.out.println("数据库中已有该数据");
+            ContentValues values = new ContentValues();
+            values.put("id", id);
+            values.put("name", username);
+            values.put("sex", sex);
+            values.put("birthday", birthday);
+            values.put("pswd", pswd);
+            db.update("user", values, "id = ?", new String[]{id + ""});
+            db.close();
+    }
+
+    public JSONObject getUser(SQLiteDatabase db) throws JSONException {
+        Cursor cursor=db.rawQuery("select * from user",null);
+
+        JSONObject json = new JSONObject();
+
+        if(cursor.moveToNext())
+        {
+            json.put("id",cursor.getInt(cursor.getColumnIndex("id")));
+            json.put("name",cursor.getString(cursor.getColumnIndex("name")));
+            json.put("sex",cursor.getInt(cursor.getColumnIndex("sex")));
+            json.put("birthday",cursor.getString(cursor.getColumnIndex("birthday")));
+            json.put("pswd",cursor.getString(cursor.getColumnIndex("pswd")));
+            cursor.close();
         }
-        return con;
+        return json;
     }
 
-    public Boolean check_user(String username, String password){
+    public boolean checkUserById(SQLiteDatabase db,int id){
+        String[] args  = new String[] {id+""};
 
+        Cursor cursor=db.rawQuery("select * from user where id == ?",args);
 
-        return Boolean.FALSE;
-    }
-
-    public void check_password(String username,String password){
-        if (con != null){
-            String sqlcmd = "Select * from usrelist where username = "+username;
-
-            Statement statement = null;
-            try {
-                statement = con.createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlcmd);
-                System.out.println("密码: "+resultSet.getString("password"));
-            } catch (SQLException e) {
-                System.out.println("SQL错误！");
-                e.printStackTrace();
-            } catch (Exception e){
-                System.out.println("未知错误！");
-                e.printStackTrace();
-            }
+        if(cursor.getCount()==0){
+            return false;
         }
-        else {
-            System.out.println("Connection is null");
-        }
-
-    }
-
-    public void setMyIp(String ip){
-        this.ip = ip;
-        System.out.println("更新IP: "+ip);
-    }
-
-    public String get_data_from_table(String table){
-        String data = "";
-        Statement statement = null;
-        if(con == null){
-            System.out.println("获取链接失败！MyDatabase.get_data_from_table");
-        }
-        else{
-            String sqlcmd = "Select * from "+table;
-            try {
-                statement = con.createStatement();
-                ResultSet resultSet = statement.executeQuery(sqlcmd);
-                data = resultSet.getString(0);
-            }
-            catch (SQLException e){
-
-            }
-        }
-        return data;
+        return true;
     }
 }
