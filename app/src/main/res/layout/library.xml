@@ -25,7 +25,8 @@
                 android:id="@+id/LLibarary"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside"
+                android:src="@drawable/shelf" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,7 +45,8 @@
                 android:id="@+id/LBorrow"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:scaleType="centerInside"
+                android:src="@drawable/borrow"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +73,8 @@
                 android:id="@+id/LNew"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside"
+                android:src="@drawable/upbook" />
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -90,7 +93,8 @@
                 android:id="@+id/LFavorites"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
-                android:src="@mipmap/ic_launcher" />
+                android:scaleType="centerInside"
+                android:src="@drawable/favorite" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
