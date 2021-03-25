@@ -3,27 +3,39 @@ package com.example.sqltest;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,ViewPager.OnPageChangeListener {
+public class MainActivity extends Activity implements View.OnClickListener,ViewPager.OnPageChangeListener {
 
-    private Button home_btn,login_btn;
-    private Button library_btn;
-    private Button profile_btn;
+    private Button home_btn,library_btn,profile_btn;
+    private Button login_btn,change_profile_btn,change_tags_btn;
     private ImageButton setting_btn;
+    private TextView username,userid,usersex,userbirthday;
 
-    private ImageButton history_btn;
-    private MyDatabase mydb;
-    private String ip;
+    private ImageButton history_btn,recommend_tody_btn;
+
+    private ImageView mypic;
+
+    private  View homepage,library,profile;
 
     MyPagerAdapter adapter;
     ViewPager viewPager;
@@ -36,6 +48,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         init_main();
         init_pages();
+        init_recommend();
+        init_prpfile();
+        renew_ui();
+    }
+
+
+
+    protected void onRestart() {
+        super.onRestart();
+        renew_ui();
+    }
+
+    public void renew_ui(){
+        try {
+            setup_ui();
+            login_btn.setText("登出");
+            set_buttons(true);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            login_btn.setText("登录");
+            set_buttons(false);
+            clear_ui();
+        }
+    }
+
+    public void set_buttons(boolean status){
+        change_profile_btn.setClickable(status);
+        change_tags_btn.setClickable(status);
+    }
+
+
+    public void setup_ui() throws JSONException {
+        System.out.println("更新ui...");
+        MyDatabase mydb = new MyDatabase(this);
+        SQLiteDatabase db = mydb.getReadableDatabase();
+        JSONObject json = mydb.getUser(db);
+        System.out.println("用户名："+json.getString("name"));
+        username.setText(json.getString("name"));
+        userid.setText(json.getInt("id")+"");
+        userbirthday.setText(json.getString("birthday"));
+        if (json.getInt("sex")==0){
+            mypic.setImageResource(R.drawable.girl);
+            usersex.setText("女");
+        }else if(json.getInt("sex")==1){
+            mypic.setImageResource(R.drawable.boy);
+            usersex.setText("男");
+        }else{
+            mypic.setImageResource(R.drawable.ic_launcher_background);
+            usersex.setText("未知");
+        }
+    }
+
+    public void clear_ui(){
+        username.setText("");
+        userid.setText("");
+        usersex.setText("");
+        userbirthday.setText("");
+        mypic.setImageResource(R.mipmap.ic_launcher_round);
     }
 
     public void init_main() {
@@ -46,43 +116,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         library_btn.setOnClickListener(this);
         profile_btn.setOnClickListener(this);
 
-        check_db();
+
     }
 
-    public void check_db(){
-        // 连接数据库
-        System.out.println("开始初始化数据库模型...MainActivity");
-        ip = getSharedPreferences("IPADDR",MODE_PRIVATE).getString("ipaddr","1.1.1.1");
-        System.out.println("ip is: "+ip);
-        mydb = new MyDatabase("10.1.1.103");
-        System.out.println("开始获取数据库链接...MainActivity");
-        Connection conn = mydb.login();
-        System.out.println("验证数据库链接...");
-        // 验证连接状态
-        if(conn == null){
-            System.out.println("错误！");
-//            Toast.makeText(this,"连接服务器错误！",Toast.LENGTH_SHORT).show();
-//            return false;
-        }
-        else{
-            System.out.println("成功！");
-//            Toast.makeText(this,"连接服务器成功！",Toast.LENGTH_SHORT).show();
-//            return true;
-        }
+    public void init_prpfile(){
+        login_btn = profile.findViewById(R.id.profile_login_btn);
+        change_profile_btn = profile.findViewById(R.id.profile_change_profile_btn);
+        change_tags_btn = profile.findViewById(R.id.profile_change_tag_btn);
+        setting_btn = profile.findViewById(R.id.profile_setting_btn);
+
+        login_btn.setOnClickListener(this);
+        setting_btn.setOnClickListener(this);
+        change_profile_btn.setOnClickListener(this);
+        change_tags_btn.setOnClickListener(this);
+
+        mypic = profile.findViewById(R.id.mypic);
+        username = profile.findViewById(R.id.myname);
+        userid = profile.findViewById(R.id.myid);
+        usersex = profile.findViewById(R.id.mysex);
+        userbirthday = profile.findViewById(R.id.mybirthday);
+    }
+
+    public void init_recommend(){
+        history_btn = homepage.findViewById(R.id.Rhistory);
+        recommend_tody_btn = homepage.findViewById(R.id.RToday);
+        history_btn.setOnClickListener(this);
+        recommend_tody_btn.setOnClickListener(this);
     }
 
     public void init_pages(){
-        View homepage = View.inflate(MainActivity.this, R.layout.homepage, null);
-        View library = View.inflate(MainActivity.this, R.layout.library, null);
-        View profile = View.inflate(MainActivity.this, R.layout.profile, null);
-
-        history_btn = homepage.findViewById(R.id.Rhistory);
-        login_btn = profile.findViewById(R.id.profile_login_btn);
-        setting_btn = profile.findViewById(R.id.profile_setting_btn);
-
-        history_btn.setOnClickListener(this);
-        login_btn.setOnClickListener(this);
-        setting_btn.setOnClickListener(this);
+        homepage = View.inflate(MainActivity.this, R.layout.homepage, null);
+        library = View.inflate(MainActivity.this, R.layout.library, null);
+        profile = View.inflate(MainActivity.this, R.layout.profile, null);
 
         views = new ArrayList<View>();
         views.add((homepage));
@@ -96,25 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager.setCurrentItem(0);
     }
 
-
-    @Override
-    public void onPageScrollStateChanged(int arg0) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-    }
-
-    @Override
-    public void onPageSelected(int arg0) {
-
-    }
     @Override
     public void onClick(View v) {
-        Bundle db = new Bundle();
-        db.putSerializable("db",this.mydb);
         switch (v.getId()) {
             case R.id.main_homePage:
                 Toast.makeText(this, "HomePage", Toast.LENGTH_SHORT).show();
@@ -128,22 +176,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewPager.setCurrentItem(2);
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.RToday:
+                Toast.makeText(this,"Recommend Today",Toast.LENGTH_SHORT).show();
+                Intent recommend_tody = new Intent(MainActivity.this,Recommend.class);
+                startActivity(recommend_tody);
+                break;
             case R.id.Rhistory:
                 Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
-                Intent history_page = new Intent(MainActivity.this,DB_Demo.class);
-                history_page.putExtras(db);
+                Intent history_page = new Intent(MainActivity.this,History.class);
                 startActivity(history_page);
                 break;
             case R.id.profile_login_btn:
                 Toast.makeText(this,"登录",Toast.LENGTH_SHORT).show();
-                Intent loginPage = new Intent(this, LoginPage.class);
-                startActivity(loginPage);
+                String mode = login_btn.getText().toString();
+                System.out.println("模式："+mode);
+                if(mode=="登录") {
+                    Intent loginPage = new Intent(this, LoginPage.class);
+                    startActivity(loginPage);
+                }
+                else{
+                    System.out.println("删除用户数据");
+                    MyDatabase mydb = new MyDatabase(this);
+                    SQLiteDatabase sq = mydb.getWritableDatabase();
+                    mydb.____delete_all(sq);
+                    this.onRestart();
+                }
                 break;
             case R.id.profile_setting_btn:
                 Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
                 Intent settingPage = new Intent(this,SettingPage.class);
-                settingPage.putExtras(db);
                 startActivity(settingPage);
+                break;
         }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int arg0) {
+    }
+
+    @Override
+    public void onPageScrolled(int arg0, float arg1, int arg2) {
+    }
+
+    @Override
+    public void onPageSelected(int arg0) {
     }
 }
