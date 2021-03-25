@@ -40,23 +40,23 @@
         android:layout_marginRight="@dimen/login_input_margin"
         android:layout_marginLeft="@dimen/login_input_margin" />
 
-    <EditText
-        android:id="@+id/login_ip_addr"
-        android:textSize="25dp"
-        android:hint="输入IP"
-        android:layout_height="@dimen/input_height"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/login_password"
-        android:layout_marginTop="@dimen/login_input_margin"
-        android:layout_marginRight="@dimen/login_input_margin"
-        android:layout_marginLeft="@dimen/login_input_margin" />
+<!--    <EditText-->
+<!--        android:id="@+id/login_ip_addr"-->
+<!--        android:textSize="25dp"-->
+<!--        android:hint="输入IP"-->
+<!--        android:layout_height="@dimen/input_height"-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/login_password"-->
+<!--        android:layout_marginTop="@dimen/login_input_margin"-->
+<!--        android:layout_marginRight="@dimen/login_input_margin"-->
+<!--        android:layout_marginLeft="@dimen/login_input_margin" />-->
 
 
     <Button
         android:id="@+id/login_login_btn"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/login_ip_addr"
+        app:layout_constraintTop_toBottomOf="@id/login_password"
         android:layout_marginTop="@dimen/login_input_margin"
         android:layout_marginLeft="@dimen/login_input_margin"
         android:layout_marginRight="@dimen/login_input_margin"
