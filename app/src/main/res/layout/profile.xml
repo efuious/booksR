@@ -5,19 +5,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:textsize="http://schemas.android.com/tools">
 
+    <TextView
+        android:id="@+id/t_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="25dp"
+        android:background="#a68030"
+        android:text="@string/t_Ptitle" />
     <!-- 个人信息栏-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/t_title">
 
         <!-- 头像 -->
         <ImageView
             android:id="@+id/mypic"
             android:layout_width="150dp"
             android:layout_height="200dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/boy"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -37,14 +46,14 @@
                 android:textSize="@dimen/text_size"
                 android:layout_height="wrap_content"
                 android:layout_width="@dimen/t_textview_size"
-                android:text="ID: "
+                android:text="I   D: "
                 />
             <TextView
                 android:id="@+id/myid"
                 android:textSize="@dimen/text_size"
                 android:layout_height="wrap_content"
                 android:layout_width="140dp"
-                android:text="000000"
+                android:text=""
                 />
         </LinearLayout>
 
@@ -70,7 +79,7 @@
                 android:textSize="@dimen/text_size"
                 android:layout_height="wrap_content"
                 android:layout_width="140dp"
-                android:text="name"
+                android:text=""
                 />
         </LinearLayout>
         <!--性别-->
@@ -95,7 +104,7 @@
                 android:textSize="@dimen/text_size"
                 android:layout_height="wrap_content"
                 android:layout_width="140dp"
-                android:text="boy"
+                android:text=""
                 />
         </LinearLayout>
         <!-- 年龄栏 -->
@@ -120,7 +129,7 @@
                 android:textSize="@dimen/text_size"
                 android:layout_height="wrap_content"
                 android:layout_width="140dp"
-                android:text="1998-10-16"
+                android:text=""
                 />
         </LinearLayout>
         <!-- toolbar -->
@@ -134,6 +143,7 @@
             android:layout_width="wrap_content">
         <!-- 修改信息Button -->
         <Button
+            android:id="@+id/profile_change_profile_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/t_tag_padding_left"
@@ -145,7 +155,8 @@
             android:layout_marginLeft="@dimen/t_tag_padding_left"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ico_setting" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/setting_ico" />
         </LinearLayout>
         <!-- tag栏 -->
         <LinearLayout
@@ -214,7 +225,7 @@
                     android:layout_height="@dimen/t_mytag_height"
                     android:layout_width="0dp"/>
                 <Button
-                    android:id="@+id/mytag6"
+                    android:id="@+id/profile_change_tag_btn"
                     android:text="@string/t_Pchangetag"
                     android:layout_weight="1"
                     android:layout_height="@dimen/t_mytag_height"
