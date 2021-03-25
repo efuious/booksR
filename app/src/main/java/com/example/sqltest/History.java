@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class History extends AppCompatActivity {
+import java.util.List;
 
-    private  MyDatabase mydb;
+
+public class    History extends AppCompatActivity {
+
+//    private  MyDatabase mydb;
     TextView textView;
-    private String data;
+    String data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,12 +23,20 @@ public class History extends AppCompatActivity {
     }
 
     public void init(){
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        mydb = (MyDatabase) bundle.getSerializable("db");
+        System.out.println("进入history页");
+
+
         textView = findViewById(R.id.history_textview);
 
-        data = mydb.get_data_from_table("history");
-        textView.setText(data);
+        System.out.println("开始读取history数据表");
+        DB_Demo db =  new DB_Demo(this);
+        List<String> list =  db.get_data("paran1=getHistory");
+        Whale whale = new Whale();
+//        for (int i=0;i<list.size();i++){
+//            whale.Parsing(list.get(i));
+//        }
+//        String str = db.get_history();
+        System.out.println("读取到的数据：");
+
     }
 }
