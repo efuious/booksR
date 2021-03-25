@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
     private EditText edit_username,edit_password;
@@ -31,11 +32,17 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view){
+        DB_Demo mydb  = new DB_Demo(this);
         if (view.getId() == R.id.login_login_btn){
             String user = edit_username.getText().toString();
             String pswd = edit_password.getText().toString();
-            String str = user+'\n'+pswd;
-            Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+            if(mydb.get_user(user,pswd)){
+                Toast.makeText(this,"登录成功！",Toast.LENGTH_SHORT).show();
+                this.finish();
+            }
+            else{
+                Toast.makeText(this,"登录失败！",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
