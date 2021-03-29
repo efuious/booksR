@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
     private ImageButton setting_btn;
     private TextView username,userid,usersex,userbirthday;
 
-    private ImageButton history_btn,recommend_tody_btn,shelf_btn,favorite_btn,Newest_btn;
+    private ImageButton history_btn,recommend_tody_btn,shelf_btn,favorite_btn,Newest_btn,Borrow_btn;
 
     private EditText input_search;
 
@@ -174,9 +174,11 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         shelf_btn = library.findViewById(R.id.LLibarary);
         favorite_btn = library.findViewById(R.id.LFavorites);
         Newest_btn = library.findViewById(R.id.LNew);
+        Borrow_btn = library.findViewById(R.id.LBorrow);
         shelf_btn.setOnClickListener(this);
         favorite_btn.setOnClickListener(this);
         Newest_btn.setOnClickListener(this);
+        Borrow_btn.setOnClickListener(this);
     }
 
     public void init_pages(){
@@ -289,6 +291,11 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
             case R.id.LNew:
                 Intent newestPage = new Intent(this,Newest.class);
                 startActivity(newestPage);
+                break;
+            case R.id.LBorrow:
+                Intent borrowPage = new Intent(this,BorrowList.class);
+                startActivity(borrowPage);
+                break;
         }
     }
 

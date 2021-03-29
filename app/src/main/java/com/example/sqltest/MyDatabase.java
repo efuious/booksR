@@ -24,10 +24,10 @@ public class MyDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql = "create table user(id integer,name varchar(20),sex int,birthday varchar(22),pswd varchar(40))";
         String sql2 = "create table usertag(id integer,tag1 varchar(20),tag2 varchar(20),tag3 varchar(20),tag4 varchar(20),tag5 varchar(20))";
+        String sql3 = "create table userborrow(id integer,borrow1 int,borrow2 int,borrow3 int,borrow4 int,borrow5 int)";
         db.execSQL(sql);
-        System.out.println("创建表：usertag");
         db.execSQL(sql2);
-        System.out.println("创建完成");
+        db.execSQL(sql3);
     }
 
     @Override
@@ -39,6 +39,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         System.out.println("开始为本地数据库添加数据...");
         ContentValues values = new ContentValues();
         ContentValues tags = new ContentValues();
+        ContentValues borrow = new ContentValues();
         values.put("id",id);
         values.put("name", username);
         values.put("sex", sex);
@@ -47,11 +48,13 @@ public class MyDatabase extends SQLiteOpenHelper {
         tags.put("id",id);
         db.insert("user", null, values);
         db.insert("usertag",null,tags);
+        db.insert("userborrow",null,tags);
     }
 
     private void delete_all(SQLiteDatabase db) {
         db.delete("user",null,null);
         db.delete("usertag",null,null);
+        db.delete("userborrow",null,null);
 //        db.close();
     }
 
@@ -74,6 +77,16 @@ public class MyDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(col, value);
         db.update("user", values, "id = ?", new String[]{id + ""});
+    }
+
+    public String get_username(SQLiteDatabase db){
+        Cursor cursor=db.rawQuery("select * from user",null);
+        if (cursor.moveToPosition(0) != true) {
+            return "";
+        }
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+        cursor.close();
+        return name;
     }
 
     public int get_userid(SQLiteDatabase db){
@@ -102,6 +115,31 @@ public class MyDatabase extends SQLiteOpenHelper {
         values.put(tagn,tagname.trim());
         db.update("userTag",values,"id =?",new String[]{userid+""});
     }
+
+    public void setBorrow(SQLiteDatabase db,String borrown,int borrow,int userid){
+        System.out.println("设置"+borrown+"为： "+borrow);
+        ContentValues values = new ContentValues();
+        values.put(borrown,borrow);
+        db.update("userBorrow",values,"id =?",new String[]{userid+""});
+    }
+
+    public List<String> getBorrow(SQLiteDatabase db){
+        Cursor cursor=db.rawQuery("select * from userborrow",null);
+        if (cursor.moveToPosition(0) != true) {
+            return null;
+        }
+        List<String> list = new LinkedList<>();
+        list.add(cursor.getString(cursor.getColumnIndex("borrow1")));
+        list.add(cursor.getString(cursor.getColumnIndex("borrow2")));
+        list.add(cursor.getString(cursor.getColumnIndex("borrow3")));
+        list.add(cursor.getString(cursor.getColumnIndex("borrow4")));
+        list.add(cursor.getString(cursor.getColumnIndex("borrow5")));
+
+        System.out.println("getBorrow: "+list);
+
+        return list;
+    }
+
 
     public List<String> getTag(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from usertag",null);

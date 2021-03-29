@@ -3,11 +3,13 @@ package com.example.sqltest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -89,8 +91,40 @@ public class Whale {
                 context.startActivity(bookdetail);
             }
         });
+
+        table.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AlertDialog.Builder(context).setTitle(string.get(position).getString("title")).setMessage("添加收藏夹？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.out.println("开始添加");
+                        DB_Demo db_demo = new DB_Demo(context);
+                        boolean status = false;
+                        MyDatabase mydb = new MyDatabase(context);
+                        SQLiteDatabase db = mydb.getReadableDatabase();
+                        String userid = mydb.get_userid(db)+"";
+                        String pswd = mydb.get_pswd(db);
+                        db.close();
+                        String msg = db_demo.addFavorite(userid,pswd.trim(),string.get(position).getInt("id")+"");
+                        switch (msg){
+                            case "true":
+                                Toast.makeText(context,"加入收藏夹成功！",Toast.LENGTH_SHORT).show(); break;
+                            case "existed":
+                                Toast.makeText(context,"已在收藏夹中",Toast.LENGTH_SHORT).show();break;
+                            case "failed":
+                                Toast.makeText(context,"请先登录！",Toast.LENGTH_SHORT).show();break;
+                            default:
+                            Toast.makeText(context,"加入收藏夹失败！",Toast.LENGTH_SHORT).show();break;
+                        }
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+                return false;
+            }
+        });
     }
-
-
-
 }

@@ -22,6 +22,7 @@ public class DB_Demo {
     private  boolean loginFlag = false;
     private  boolean updateFlag = false;
     private Context context;
+    private String msg;
 
     public DB_Demo(Context con){
         context = con;
@@ -48,6 +49,26 @@ public class DB_Demo {
         return updateFlag;
     }
 
+    public String addFavorite(String userid,String pswd, String bookid){
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=addFavorite&param2="+userid+"&param3="+pswd+"&param4="+bookid;
+        System.out.println("执行命令："+strUrl);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _addFavorite(strUrl);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+
+        return msg;
+    }
 
     public boolean deleteFavorite(int id) {
         String message = id+"";
@@ -90,6 +111,31 @@ public class DB_Demo {
         System.out.println("子线程结束");
         System.out.println("全局变量："+data);
         return updateFlag;
+    }
+
+    private void _addFavorite(String strUrl){
+        msg = "false";
+        URL url = null;
+        try{
+            url=new URL(strUrl);
+            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+
+            String readLine = null;
+            System.out.println("updateUser正在获取内容内容...");
+            if((readLine=br.readLine())!=null) {
+                in.close();
+                System.out.println("获取内容："+readLine);
+
+                msg = readLine;
+            }
+            urlConnection.disconnect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void _updateUser(String strUrl){
@@ -301,7 +347,9 @@ public class DB_Demo {
                 for (int i=1;i<6;i++){
                     try{
                         String tag = json.getString("tag"+i);
+                        int  borrow = json.getInt("borrow"+i);
                         localdb.setTag(usertable,"tag"+i+"",tag,json.getInt("id"));
+                        localdb.setBorrow(usertable,"borrow"+i+"",borrow,json.getInt("id"));
                     }catch (Exception e){
                         System.out.println("tag"+i+"没有数据！");;
                         localdb.setTag(usertable,"tag"+i+"","",json.getInt("id"));
