@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BorrowList"></activity>
+        <activity android:name=".Personal"></activity>
+        <activity android:name=".BorrowList" />
         <activity android:name=".Newest" />
         <activity android:name=".Register" />
         <activity android:name=".ChangeProfile" />
