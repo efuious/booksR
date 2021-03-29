@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/login_username"
         android:textSize="25dp"
-        android:hint="输入ID"
+        android:hint="输入用户名"
         android:layout_height="@dimen/input_height"
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/login_title"
@@ -40,18 +40,6 @@
         android:layout_marginRight="@dimen/login_input_margin"
         android:layout_marginLeft="@dimen/login_input_margin" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/login_ip_addr"-->
-<!--        android:textSize="25dp"-->
-<!--        android:hint="输入IP"-->
-<!--        android:layout_height="@dimen/input_height"-->
-<!--        android:layout_width="match_parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/login_password"-->
-<!--        android:layout_marginTop="@dimen/login_input_margin"-->
-<!--        android:layout_marginRight="@dimen/login_input_margin"-->
-<!--        android:layout_marginLeft="@dimen/login_input_margin" />-->
-
-
     <Button
         android:id="@+id/login_login_btn"
         android:layout_height="wrap_content"
@@ -61,5 +49,16 @@
         android:layout_marginLeft="@dimen/login_input_margin"
         android:layout_marginRight="@dimen/login_input_margin"
         android:text="@string/t_Plogin"
+        android:textSize="30dp"/>
+
+    <Button
+        android:id="@+id/login_register_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/login_login_btn"
+        android:layout_marginTop="@dimen/login_input_margin"
+        android:layout_marginLeft="@dimen/login_input_margin"
+        android:layout_marginRight="@dimen/login_input_margin"
+        android:text="注册"
         android:textSize="30dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
