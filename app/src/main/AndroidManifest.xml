@@ -14,7 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Whale"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".ChangeProfile" />
+        <activity android:name=".SelectTag" />
+        <activity android:name=".BookDetail" />
+        <activity android:name=".Favorite" />
+        <activity android:name=".BookShelf" />
+        <activity android:name=".ExpandableListviewAdapter" />
+        <activity android:name=".Shelf" />
+        <activity android:name=".SearchPage" />
+        <activity android:name=".Whale" />
         <activity android:name=".Recommend" />
         <activity android:name=".SettingPage" />
         <activity android:name=".MyDatabase" />

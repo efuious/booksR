@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_size">20dp</dimen>
+    <dimen name="text_size_s">16dp</dimen>
     <dimen name="t_textview_size">65dp</dimen>
     <dimen name="t_mytag_width">100dp</dimen>
     <dimen name="t_mytag_height">50dp</dimen>
