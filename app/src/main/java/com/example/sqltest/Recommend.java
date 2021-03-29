@@ -58,12 +58,9 @@ public class Recommend extends AppCompatActivity {
                 final String id = string.get(position).getString("id");
                 final String title = string.get(position).getString("title");
                 final String article = string.get(position).getString("article");
-                System.out.println(id + "\t" + title + "\t" + article);
-
                 new AlertDialog.Builder(Recommend.this).setTitle("第"+id+"号 "+title).setMessage(article).setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -81,7 +78,5 @@ public class Recommend extends AppCompatActivity {
         DB_Demo db =  new DB_Demo(this);
         string =  db.get_table("param1=getRecommend");
         recommendList = findViewById(R.id.userlist);
-//        for (int i=0;i<list.size();i++){
-//        }
     }
 }
