@@ -1,9 +1,23 @@
 package com.example.sqltest;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import androidx.appcompat.app.AlertDialog;
+
 import net.sf.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Whale {
 
@@ -15,8 +29,17 @@ public class Whale {
             string.add(split[i].trim());
             System.out.println("解析："+split[i].trim());
         }
-//        System.out.println("数据："+string);
         return string;
+    }
+
+    public int checkSex(String sex){
+        if (sex.equals("男")){
+            return 1;
+        }
+        else if(sex.equals("女")){
+            return 0;
+        }
+        return 2;
     }
 
     public JSONObject String2Json(String string){
@@ -36,5 +59,38 @@ public class Whale {
         }
         return json;
     }
+
+    public void DoWork(final Context context, List<JSONObject> strings , ListView table) {
+        System.out.println("开始写入booklist数据...");
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < strings.size(); i++) {
+            Map<String, Object> listitem = new HashMap<String, Object>();
+            String publish = strings.get(i).getString("publish") ;
+            String title = strings.get(i).getString("title");
+            String author = strings.get(i).getString("author");
+            listitem.put("publish", publish);
+            listitem.put("title", title);
+            listitem.put("author", author);
+            mapList.add(listitem);
+        }
+
+        SimpleAdapter simpleAdapter;
+        simpleAdapter = new SimpleAdapter(context, mapList, R.layout.book_adapter, new String[]{"title","author","publish"}, new int[]{R.id.ba_bookname, R.id.ba_author,R.id.ba_publish});
+        table.setAdapter(simpleAdapter);
+
+        final List<JSONObject> string = strings;
+        table.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long l) {
+                Intent bookdetail = new Intent(context,BookDetail.class);
+                String str = string.get(position).toString();
+                System.out.println("点击对象："+str);
+                bookdetail.putExtra("string",str);
+                context.startActivity(bookdetail);
+            }
+        });
+    }
+
+
 
 }
