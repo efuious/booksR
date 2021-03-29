@@ -10,6 +10,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,12 +27,15 @@ import java.util.List;
 
 public class MainActivity extends Activity implements View.OnClickListener,ViewPager.OnPageChangeListener {
 
-    private Button home_btn,library_btn,profile_btn;
+    private Button home_btn,library_btn,profile_btn,search_btn;
     private Button login_btn,change_profile_btn,change_tags_btn;
+    private Button tag1,tag2,tag3,tag4,tag5;
     private ImageButton setting_btn;
     private TextView username,userid,usersex,userbirthday;
 
-    private ImageButton history_btn,recommend_tody_btn;
+    private ImageButton history_btn,recommend_tody_btn,shelf_btn,favorite_btn;
+
+    private EditText input_search;
 
     private ImageView mypic;
 
@@ -49,6 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         init_main();
         init_pages();
         init_recommend();
+        init_libary();
         init_prpfile();
         renew_ui();
     }
@@ -84,7 +89,6 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         MyDatabase mydb = new MyDatabase(this);
         SQLiteDatabase db = mydb.getReadableDatabase();
         JSONObject json = mydb.getUser(db);
-        System.out.println("用户名："+json.getString("name"));
         username.setText(json.getString("name"));
         userid.setText(json.getInt("id")+"");
         userbirthday.setText(json.getString("birthday"));
@@ -94,10 +98,15 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         }else if(json.getInt("sex")==1){
             mypic.setImageResource(R.drawable.boy);
             usersex.setText("男");
-        }else{
-            mypic.setImageResource(R.drawable.ic_launcher_background);
-            usersex.setText("未知");
         }
+        List<String> list = mydb.getTag(db);
+        System.out.println(list);
+        tag1.setText(list.get(0).equals("")?"+":list.get(0));
+        tag2.setText(list.get(1).equals("")?"+":list.get(1));
+        tag3.setText(list.get(2).equals("")?"+":list.get(2));
+        tag4.setText(list.get(3).equals("")?"+":list.get(3));
+        tag5.setText(list.get(4).equals("")?"+":list.get(4));
+        db.close();
     }
 
     public void clear_ui(){
@@ -106,6 +115,11 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         usersex.setText("");
         userbirthday.setText("");
         mypic.setImageResource(R.mipmap.ic_launcher_round);
+        tag1.setText("+");
+        tag2.setText("+");
+        tag3.setText("+");
+        tag4.setText("+");
+        tag5.setText("+");
     }
 
     public void init_main() {
@@ -115,8 +129,9 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         home_btn.setOnClickListener(this);
         library_btn.setOnClickListener(this);
         profile_btn.setOnClickListener(this);
-
-
+        search_btn =findViewById(R.id.main_search);
+        search_btn.setOnClickListener(this);
+        input_search = findViewById(R.id.main_input_search);
     }
 
     public void init_prpfile(){
@@ -125,10 +140,21 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         change_tags_btn = profile.findViewById(R.id.profile_change_tag_btn);
         setting_btn = profile.findViewById(R.id.profile_setting_btn);
 
+        tag1 = profile.findViewById(R.id.mytag1);
+        tag2 = profile.findViewById(R.id.mytag2);
+        tag3 = profile.findViewById(R.id.mytag3);
+        tag4 = profile.findViewById(R.id.mytag4);
+        tag5 = profile.findViewById(R.id.mytag5);
+
         login_btn.setOnClickListener(this);
         setting_btn.setOnClickListener(this);
         change_profile_btn.setOnClickListener(this);
         change_tags_btn.setOnClickListener(this);
+        tag1.setOnClickListener(this);
+        tag2.setOnClickListener(this);
+        tag3.setOnClickListener(this);
+        tag4.setOnClickListener(this);
+        tag5.setOnClickListener(this);
 
         mypic = profile.findViewById(R.id.mypic);
         username = profile.findViewById(R.id.myname);
@@ -142,6 +168,13 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         recommend_tody_btn = homepage.findViewById(R.id.RToday);
         history_btn.setOnClickListener(this);
         recommend_tody_btn.setOnClickListener(this);
+    }
+
+    public void init_libary(){
+        shelf_btn = library.findViewById(R.id.LLibarary);
+        favorite_btn = library.findViewById(R.id.LFavorites);
+        shelf_btn.setOnClickListener(this);
+        favorite_btn.setOnClickListener(this);
     }
 
     public void init_pages(){
@@ -206,6 +239,50 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
                 Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
                 Intent settingPage = new Intent(this,SettingPage.class);
                 startActivity(settingPage);
+                break;
+            case R.id.main_search:
+                Toast.makeText(this,"搜索",Toast.LENGTH_SHORT).show();
+                Intent searchPage = new Intent(this,SearchPage.class);
+                searchPage.putExtra("value",input_search.getText().toString());
+                startActivity(searchPage);
+                break;
+            case R.id.LLibarary:
+                Toast.makeText(this,"浏览书库",Toast.LENGTH_SHORT).show();
+                Intent shelfPage = new Intent(this,Shelf.class);
+                startActivity(shelfPage);
+                break;
+            case R.id.LFavorites:  Toast.makeText(this,"收藏夹",Toast.LENGTH_SHORT).show();
+                Intent favoritePage = new Intent(this,Favorite.class);
+                startActivity(favoritePage);
+                break;
+            case R.id.mytag1:
+                Intent selectTag1 = new Intent(this,SelectTag.class);
+                selectTag1.putExtra("tag","tag1");
+                startActivity(selectTag1);
+                break;
+            case R.id.mytag2:
+                Intent selectTag2 = new Intent(this,SelectTag.class);
+                selectTag2.putExtra("tag","tag2");
+                startActivity(selectTag2);
+                break;
+            case R.id.mytag3:
+                Intent selectTag3 = new Intent(this,SelectTag.class);
+                selectTag3.putExtra("tag","tag3");
+                startActivity(selectTag3);
+                break;
+            case R.id.mytag4:
+                Intent selectTag4 = new Intent(this,SelectTag.class);
+                selectTag4.putExtra("tag","tag4");
+                startActivity(selectTag4);
+                break;
+            case R.id.mytag5:
+                Intent selectTag5 = new Intent(this,SelectTag.class);
+                selectTag5.putExtra("tag","tag5");
+                startActivity(selectTag5);
+                break;
+            case R.id.profile_change_profile_btn:
+                Intent changeProfile = new Intent(this,ChangeProfile.class);
+                startActivity(changeProfile);
                 break;
         }
     }
