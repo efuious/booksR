@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import net.sf.json.JSONObject;
 
@@ -43,6 +44,8 @@ public class BorrowList extends AppCompatActivity {
                     list.add(db_demo.getSearchBook("id", booknum).get(0));
                 }
             }
+        }else{
+            Toast.makeText(this,"请登录！",Toast.LENGTH_SHORT).show();
         }
         db.close();
         new Whale().DoWork(this,list,bookList);
