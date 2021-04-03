@@ -33,7 +33,7 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
     private ImageButton setting_btn;
     private TextView username,userid,usersex,userbirthday;
 
-    private ImageButton history_btn,recommend_tody_btn,personal_btn;
+    private ImageButton history_btn,recommend_tody_btn,personal_btn,tips_btn;
     private ImageButton shelf_btn,favorite_btn,Newest_btn,Borrow_btn;
 
 
@@ -169,9 +169,11 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         history_btn = homepage.findViewById(R.id.Rhistory);
         recommend_tody_btn = homepage.findViewById(R.id.RToday);
         personal_btn = homepage.findViewById(R.id.RMy);
+        tips_btn = homepage.findViewById(R.id.RTip);
         history_btn.setOnClickListener(this);
         recommend_tody_btn.setOnClickListener(this);
         personal_btn.setOnClickListener(this);
+        tips_btn.setOnClickListener(this);
     }
 
     public void init_libary(){
@@ -205,29 +207,30 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.main_homePage:
+            case R.id.main_homePage:    // 点击推荐事件，跳转推荐页
                 Toast.makeText(this, "HomePage", Toast.LENGTH_SHORT).show();
                 viewPager.setCurrentItem(0);
                 break;
-            case R.id.main_library:
+            case R.id.main_library:     // 点击书库事件，跳转书库页
                 viewPager.setCurrentItem(1);
                 Toast.makeText(this, "Library", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.main_profile:
+            case R.id.main_profile:     // 点击我的页，跳转我的页
                 viewPager.setCurrentItem(2);
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.RToday:
+            case R.id.RToday:       //点金今日推荐
                 Toast.makeText(this,"Recommend Today",Toast.LENGTH_SHORT).show();
-                Intent recommend_tody = new Intent(MainActivity.this,Recommend.class);
-                startActivity(recommend_tody);
+                Intent recommend_today = new Intent(MainActivity.this,Recommend.class);
+                recommend_today.putExtra("table","Recommend");
+                startActivity(recommend_today);
                 break;
-            case R.id.Rhistory:
+            case R.id.Rhistory:     //点击历史上的今天
                 Toast.makeText(this, "History", Toast.LENGTH_SHORT).show();
                 Intent history_page = new Intent(MainActivity.this,History.class);
                 startActivity(history_page);
                 break;
-            case R.id.profile_login_btn:
+            case R.id.profile_login_btn:        //点击登录 / 登出按钮
                 Toast.makeText(this,"登录",Toast.LENGTH_SHORT).show();
                 String mode = login_btn.getText().toString();
                 System.out.println("模式："+mode);
@@ -243,12 +246,13 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
                     this.onRestart();
                 }
                 break;
-            case R.id.profile_setting_btn:
+            case R.id.profile_setting_btn:         //点击设置按钮，跳转公告页
                 Toast.makeText(this,"设置",Toast.LENGTH_SHORT).show();
-                Intent settingPage = new Intent(this,SettingPage.class);
+                Intent settingPage = new Intent(this,Recommend.class);
+                settingPage.putExtra("table","annouce");
                 startActivity(settingPage);
                 break;
-            case R.id.main_search:
+            case R.id.main_search:      //点击搜索按钮
                 Toast.makeText(this,"搜索",Toast.LENGTH_SHORT).show();
                 Intent searchPage = new Intent(this,SearchPage.class);
                 searchPage.putExtra("value",input_search.getText().toString());
@@ -259,7 +263,8 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
                 Intent shelfPage = new Intent(this,Shelf.class);
                 startActivity(shelfPage);
                 break;
-            case R.id.LFavorites:  Toast.makeText(this,"收藏夹",Toast.LENGTH_SHORT).show();
+            case R.id.LFavorites:
+                Toast.makeText(this,"收藏夹",Toast.LENGTH_SHORT).show();
                 Intent favoritePage = new Intent(this,Favorite.class);
                 startActivity(favoritePage);
                 break;
@@ -289,20 +294,30 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
                 startActivity(selectTag5);
                 break;
             case R.id.profile_change_profile_btn:
+                Toast.makeText(this,"修改个人信息",Toast.LENGTH_SHORT).show();
                 Intent changeProfile = new Intent(this,ChangeProfile.class);
                 startActivity(changeProfile);
                 break;
             case R.id.LNew:
+                Toast.makeText(this,"最近上新",Toast.LENGTH_SHORT).show();
                 Intent newestPage = new Intent(this,Newest.class);
                 startActivity(newestPage);
                 break;
             case R.id.LBorrow:
+                Toast.makeText(this,"我的借阅",Toast.LENGTH_SHORT).show();
                 Intent borrowPage = new Intent(this,BorrowList.class);
                 startActivity(borrowPage);
                 break;
             case R.id.RMy:
+                Toast.makeText(this,"私人推荐",Toast.LENGTH_SHORT).show();
                 Intent personalPage = new Intent(this,Personal.class);
                 startActivity(personalPage);
+                break;
+            case R.id.RTip:
+                Toast.makeText(this,"小tip",Toast.LENGTH_SHORT).show();
+                Intent tipPage = new Intent(this,Recommend.class);
+                tipPage.putExtra("table","Tips");
+                startActivity(tipPage);
                 break;
         }
     }
