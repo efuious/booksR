@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,14 +28,16 @@ public class Recommend extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
+        Intent intent = getIntent();
+        String table = intent.getStringExtra("table");
 
-        init();
+        init(table);
         DoWork();
 
     }
 
     private void DoWork() {
-        System.out.println("开始写入recommend数据...");
+        System.out.println("开始写入数据...");
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < string.size(); i++) {
             Map<String, Object> listitem = new HashMap<String, Object>();
@@ -71,12 +74,12 @@ public class Recommend extends AppCompatActivity {
         });
     }
 
-    public void init(){
-        System.out.println("进入Recommend页");
+    public void init(String table){
+        System.out.println("进入ita页");
 
-        System.out.println("开始读取recommend数据表");
+        System.out.println("开始读取ita数据表");
         DB_Demo db =  new DB_Demo(this);
-        string =  db.get_table("param1=getRecommend");
+        string =  db.get_table("param1=getIta&param2="+table);
         recommendList = findViewById(R.id.userlist);
     }
 }
