@@ -77,21 +77,27 @@ public class Personal extends Activity implements View.OnClickListener {
         List<String> taglist = mydb.getTag(db);
 
         int  count = 0;
-
-        for(int i=0;i<5;i++){
-            List<JSONObject> tagbook = db_demo.getSearchBook("tag2",taglist.get(i));
-            if(taglist.get(i).equals("") || tagbook.size()==0){
-                personal.add(booklist.get(count));
-                count++;
-                if(count>booklist.size()){count = 0;}
-            } else{
-                System.out.println("获取到tag条数："+tagbook.size());
-                int number = new Random().nextInt(tagbook.size());
-                System.out.println("生成随机数："+number);
-                personal.add(tagbook.get(number));
+        if(taglist == null || taglist.size()==0){      // 如果不存在taglist
+            for(int i=0;i<6;i++){                      // 从booklist填充6本书
+                personal.add(booklist.get(i));
             }
         }
-        personal.add(booklist.get(count));
+        else{
+            for(int i=0;i<5;i++){
+                List<JSONObject> tagbook = db_demo.getSearchBook("tag2",taglist.get(i));
+                if(tagbook.size()==0 || taglist.get(i).equals("")){
+                    personal.add(booklist.get(count));
+                    count++;
+                    if(count>booklist.size()){count = 0;}
+                } else{
+                    System.out.println("获取到tag条数："+tagbook.size());
+                    int number = new Random().nextInt(tagbook.size());
+                    System.out.println("生成随机数："+number);
+                    personal.add(tagbook.get(number));
+                }
+            }
+            personal.add(booklist.get(count));
+        }
 
     }
     private void init_ui(){
