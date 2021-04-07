@@ -241,9 +241,10 @@ public class DB_Demo {
             List<JSONObject> result = new LinkedList<>();
             String readLine = null;
             System.out.println("_gettable开始解析内容...");
+            Whale whale = new Whale();
             while((readLine=br.readLine())!=null) {
                 readLine = readLine.substring(1, readLine.length() - 1);
-                jsonObject = new Whale().String2Jsons(readLine);
+                jsonObject = whale.String2Jsons(readLine);
             }
             in.close();
             urlConnection.disconnect();
@@ -345,11 +346,11 @@ public class DB_Demo {
                 SQLiteDatabase usertable = localdb.getWritableDatabase();
                 localdb.add_data(usertable,json.getInt("id"),json.getString("username"),json.getInt("sex"),json.getString("birthday"),json.getString("pswd"));
                 for (int i=1;i<6;i++){
+                    int  borrow = json.getInt("borrow"+i);
+                    localdb.setBorrow(usertable,"borrow"+i+"",borrow,json.getInt("id"));
                     try{
                         String tag = json.getString("tag"+i);
-                        int  borrow = json.getInt("borrow"+i);
                         localdb.setTag(usertable,"tag"+i+"",tag,json.getInt("id"));
-                        localdb.setBorrow(usertable,"borrow"+i+"",borrow,json.getInt("id"));
                     }catch (Exception e){
                         System.out.println("tag"+i+"没有数据！");;
                         localdb.setTag(usertable,"tag"+i+"","",json.getInt("id"));

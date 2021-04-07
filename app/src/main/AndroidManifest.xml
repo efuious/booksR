@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.sqltest">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,17 +24,21 @@
         <activity android:name=".BookDetail" />
         <activity android:name=".Favorite" />
         <activity android:name=".BookShelf" />
-        <activity android:name=".ExpandableListviewAdapter" />
+        <activity android:name=".ExpandableListviewAdapter"
+            tools:ignore="Instantiatable" />
         <activity android:name=".Shelf" />
         <activity android:name=".SearchPage" />
-        <activity android:name=".Whale" />
+        <activity android:name=".Whale"
+            tools:ignore="Instantiatable" />
         <activity android:name=".Recommend" />
-        <activity android:name=".SettingPage" />
-        <activity android:name=".MyDatabase" />
+        <activity android:name=".MyDatabase"
+            tools:ignore="Instantiatable" />
         <activity android:name=".LoginPage" />
         <activity android:name=".History" />
-        <activity android:name=".MyPagerAdapter" />
-        <activity android:name=".DB_Demo" />
+        <activity android:name=".MyPagerAdapter"
+            tools:ignore="Instantiatable" />
+        <activity android:name=".DB_Demo"
+            tools:ignore="Instantiatable" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
