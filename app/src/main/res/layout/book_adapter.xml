@@ -11,8 +11,7 @@
         android:id="@+id/ba_image"
         android:layout_height="match_parent"
         android:layout_width="50dp"
-        android:src="@drawable/book"
-        />
+        android:src="@drawable/book" />
 
     <LinearLayout
         android:layout_height="70dp"

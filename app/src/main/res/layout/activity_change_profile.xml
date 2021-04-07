@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".ChangeProfile">
 
+    <TextView
+        android:layout_height="@dimen/head"
+        android:layout_width="match_parent"
+        android:textAlignment="textStart"
+        android:textSize="28dp"
+        android:textColor="#000000"
+        android:background="#dcdcdc"
+        android:text="个人信息"
+        android:gravity="center_horizontal"
+        tools:ignore="RtlCompat" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="50dp"

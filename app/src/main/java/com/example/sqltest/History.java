@@ -21,17 +21,19 @@ public class    History extends Activity {
         init();
     }
 
-    public void init(){
+    public void init() {
         System.out.println("进入history页");
         date = findViewById(R.id.history_date);
         title = findViewById(R.id.history_title);
         article = findViewById(R.id.history_article);
 
         System.out.println("开始读取history数据表");
-        DB_Demo db =  new DB_Demo(this);
-        List<JSONObject> list =  db.get_table("param1=getHistory");
-        date.setText(list.get(0).getString("id"));
-        title.setText(list.get(0).getString("title"));
-        article.setText(list.get(0).getString("article"));
+        DB_Demo db = new DB_Demo(this);
+        List<JSONObject> list = db.get_table("param1=getHistory");
+        if (list.size() != 0) {
+            date.setText(list.get(0).getString("id"));
+            title.setText(list.get(0).getString("title"));
+            article.setText(list.get(0).getString("article"));
+        }
     }
 }
