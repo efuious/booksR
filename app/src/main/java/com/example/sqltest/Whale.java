@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,8 +45,7 @@ public class Whale {
 
     public JSONObject String2Json(String string){
         System.out.println("转换字符串："+string);
-        JSONObject jo =JSONObject.fromObject(string);
-        return jo;
+        return JSONObject.fromObject(string);
     }
 
     public List<JSONObject> String2Jsons(String string){

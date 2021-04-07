@@ -1,8 +1,8 @@
 package com.example.sqltest;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Recommend extends AppCompatActivity {
+public class Recommend extends Activity {
 
     private  List<JSONObject> string = new LinkedList<>();
     private ListView recommendList;

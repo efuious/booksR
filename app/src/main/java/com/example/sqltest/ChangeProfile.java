@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
-public class ChangeProfile extends AppCompatActivity implements View.OnClickListener {
+public class ChangeProfile extends Activity implements View.OnClickListener {
 
     EditText name,birthday,sex,pswd;
     Button save_btn;

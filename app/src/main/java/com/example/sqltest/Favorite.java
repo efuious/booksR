@@ -1,8 +1,8 @@
  package com.example.sqltest;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,14 +15,13 @@ import android.widget.Toast;
 
 import net.sf.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Favorite extends AppCompatActivity {
+public class Favorite extends Activity {
 
     private ListView favoritelist;
 

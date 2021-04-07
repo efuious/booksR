@@ -1,12 +1,10 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +17,6 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +87,8 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
         SQLiteDatabase db = mydb.getReadableDatabase();
         JSONObject json = mydb.getUser(db);
         username.setText(json.getString("name"));
-        userid.setText(json.getInt("id")+"");
+        String id = json.getInt("id")+"";
+        userid.setText(id);
         userbirthday.setText(json.getString("birthday"));
         if (json.getInt("sex")==0){
             mypic.setImageResource(R.drawable.girl);
@@ -234,7 +230,7 @@ public class MainActivity extends Activity implements View.OnClickListener,ViewP
                 Toast.makeText(this,"登录",Toast.LENGTH_SHORT).show();
                 String mode = login_btn.getText().toString();
                 System.out.println("模式："+mode);
-                if(mode=="登录") {
+                if(mode.equals("登录")) {
                     Intent loginPage = new Intent(this, LoginPage.class);
                     startActivity(loginPage);
                 }

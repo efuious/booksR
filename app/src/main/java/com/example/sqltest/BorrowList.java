@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -9,11 +8,10 @@ import android.widget.Toast;
 
 import net.sf.json.JSONObject;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BorrowList extends AppCompatActivity {
+public class BorrowList extends Activity {
 
     private List<JSONObject> list = new LinkedList<>();
     private ListView bookList;

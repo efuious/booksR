@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -11,7 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Newest extends AppCompatActivity {
+public class Newest extends Activity {
 
 
     private List<JSONObject> list = new LinkedList<>();

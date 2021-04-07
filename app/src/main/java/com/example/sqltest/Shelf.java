@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import net.sf.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Shelf extends AppCompatActivity {
+public class Shelf extends Activity {
 
     private ExpandableListView tagList;
     private String[][] childs;
@@ -34,8 +33,7 @@ public class Shelf extends AppCompatActivity {
 
     public void Init(){
         DB_Demo mydb = new DB_Demo(this);
-        List<JSONObject> list = new LinkedList<>();
-        list = mydb.get_table("param1=getTag");
+        List<JSONObject> list =  mydb.get_table("param1=getTag");
 
         childs = new String[list.size()][];
         for(int i=0;i<list.size();i++){

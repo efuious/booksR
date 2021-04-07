@@ -1,30 +1,22 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.euicc.DownloadableSubscription;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-public class SearchPage extends AppCompatActivity implements View.OnClickListener {
+public class SearchPage extends Activity implements View.OnClickListener {
 
     private List<JSONObject> string = new LinkedList<>();
     private ListView searchList;

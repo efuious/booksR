@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class LoginPage extends AppCompatActivity implements View.OnClickListener {
+public class LoginPage extends Activity implements View.OnClickListener {
 
     private EditText edit_username,edit_password;
     private Button login_btn,register_btn;

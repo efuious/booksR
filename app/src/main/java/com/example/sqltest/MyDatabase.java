@@ -60,18 +60,20 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public void ____delete_all(SQLiteDatabase db){
         db.delete("user",null,null);
+        db.delete("usertag",null,null);
+        db.delete("userborrow",null,null);
         db.close();
     }
 
-    public void update(SQLiteDatabase db,int id, String username, int sex, String birthday,String pswd) {
-            ContentValues values = new ContentValues();
-            values.put("name", username);
-            values.put("sex", sex);
-            values.put("birthday", birthday);
-            values.put("pswd", pswd);
-            db.update("user", values, "id = ?", new String[]{id + ""});
-            db.close();
-    }
+//    public void update(SQLiteDatabase db,int id, String username, int sex, String birthday,String pswd) {
+//            ContentValues values = new ContentValues();
+//            values.put("name", username);
+//            values.put("sex", sex);
+//            values.put("birthday", birthday);
+//            values.put("pswd", pswd);
+//            db.update("user", values, "id = ?", new String[]{id + ""});
+//            db.close();
+//    }
 
     public void updateUser(SQLiteDatabase db, int id, String col, String value){
         ContentValues values = new ContentValues();
@@ -81,7 +83,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public String get_username(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from user",null);
-        if (cursor.moveToPosition(0) != true) {
+        if (!cursor.moveToPosition(0)) {
             return "";
         }
         String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -91,7 +93,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public int get_userid(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from user",null);
-        if (cursor.moveToPosition(0) != true) {
+        if (!cursor.moveToPosition(0)) {
             return 0;
         }
         int id = cursor.getInt(cursor.getColumnIndex("id"));
@@ -101,7 +103,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public String get_pswd(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from user",null);
-        if (cursor.moveToPosition(0) != true) {
+        if (!cursor.moveToPosition(0)) {
             return "";
         }
         String pswd = cursor.getString(cursor.getColumnIndex("pswd"));
@@ -125,7 +127,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
     public List<String> getBorrow(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from userborrow",null);
-        if (cursor.moveToPosition(0) != true) {
+        if (!cursor.moveToPosition(0)) {
             return null;
         }
         List<String> list = new LinkedList<>();
@@ -136,14 +138,14 @@ public class MyDatabase extends SQLiteOpenHelper {
         list.add(cursor.getString(cursor.getColumnIndex("borrow5")));
 
         System.out.println("getBorrow: "+list);
-
+        cursor.close();
         return list;
     }
 
 
     public List<String> getTag(SQLiteDatabase db){
         Cursor cursor=db.rawQuery("select * from usertag",null);
-        if (cursor.moveToPosition(0) != true) {
+        if (!cursor.moveToPosition(0)) {
             return null;
         }
         List<String> list = new LinkedList<>();
@@ -153,6 +155,7 @@ public class MyDatabase extends SQLiteOpenHelper {
         list.add(cursor.getString(cursor.getColumnIndex("tag4")));
         list.add(cursor.getString(cursor.getColumnIndex("tag5")));
 
+        cursor.close();
         return list;
     }
 

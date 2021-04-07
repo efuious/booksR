@@ -1,21 +1,18 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
-
 import net.sf.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SelectTag extends AppCompatActivity {
+public class SelectTag extends Activity {
 
     private ExpandableListView tagList;
     private String[][] childs;
@@ -49,8 +46,7 @@ public class SelectTag extends AppCompatActivity {
 
     public void Init(){
         DB_Demo mydb = new DB_Demo(this);
-        List<JSONObject> list = new LinkedList<>();
-        list = mydb.get_table("param1=getTag");
+        List<JSONObject> list = mydb.get_table("param1=getTag");
 
         childs = new String[list.size()][];
         for(int i=0;i<list.size();i++){

@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 import net.sf.json.JSONObject;
 
 
-public class BookDetail extends AppCompatActivity {
+public class BookDetail extends Activity {
 
     private JSONObject json;
 

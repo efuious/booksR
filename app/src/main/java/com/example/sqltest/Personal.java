@@ -1,7 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Personal extends AppCompatActivity implements View.OnClickListener {
+public class Personal extends Activity implements View.OnClickListener {
 
     ImageButton book1, book2, book3, book4, book5,book6;
     TextView text1, text2, text3, text4, text5,text6;

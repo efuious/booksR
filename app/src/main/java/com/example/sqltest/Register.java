@@ -1,8 +1,7 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 
-public class Register extends AppCompatActivity implements View.OnClickListener{
+public class Register extends Activity implements View.OnClickListener{
     EditText r_name,r_sex,r_birthday,r_pswd;
     Button register_btn;
 
@@ -52,7 +51,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         if (!new_name.isEmpty()&&!new_birthday.isEmpty()&&!new_sex.isEmpty()&&!new_pswd.isEmpty()) {
             try {
                 boolean flag = db_demo.register(new_name,get_sex,new_birthday,new_pswd);
-                if(flag==true) {
+                if(flag) {
                     System.out.println("注册成功！");
                     Toast.makeText(this,"注册成功！",Toast.LENGTH_SHORT).show();
                     finish();
@@ -60,12 +59,10 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 else{
                     System.out.println("注册失败！");
                     Toast.makeText(this,"注册失败！请检查输入",Toast.LENGTH_SHORT).show();
-                    return;
                 }
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
                 Toast.makeText(this,"注册失败！请检查输入",Toast.LENGTH_SHORT).show();
-                return;
             }
         }
 

@@ -1,6 +1,6 @@
 package com.example.sqltest;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -9,9 +9,8 @@ import net.sf.json.JSONObject;
 import java.util.List;
 
 
-public class    History extends AppCompatActivity {
+public class    History extends Activity {
 
-//    private  MyDatabase mydb;
     TextView date,title,article;
     String data;
     @Override
