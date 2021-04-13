@@ -51,7 +51,7 @@ public class ChangeProfile extends Activity implements View.OnClickListener {
         int id = mydb.get_userid(db);
         String ps = mydb.get_pswd(db);
         try {
-            if (!new_name.isEmpty()) {
+            if (!new_name.isEmpty()) {      //更新用户名
                if( db_demo.updateUser(id, ps, "username", new_name)){
                    mydb.updateUser(db,id,"name",new_name);
                }else{
@@ -60,7 +60,7 @@ public class ChangeProfile extends Activity implements View.OnClickListener {
                    return;
                }
             }
-            if (!new_birthday.isEmpty()) {
+            if (!new_birthday.isEmpty()) {  //更新用户生日
                 if(db_demo.updateUser(id, ps, "birthday", new_birthday)){
                     mydb.updateUser(db,id,"birthday",new_birthday);
                 }else{
@@ -69,7 +69,7 @@ public class ChangeProfile extends Activity implements View.OnClickListener {
                     return;
                 }
             }
-            if (!new_sex.isEmpty()) {
+            if (!new_sex.isEmpty()) {       //更新用户性别
                 if(db_demo.updateUser(id, ps, "sex", get_sex+"")) {
                     mydb.updateUser(db, id, "sex", get_sex + "");
                 }else{
@@ -78,7 +78,7 @@ public class ChangeProfile extends Activity implements View.OnClickListener {
                     return;
                 }
             }
-            if (!new_pswd.isEmpty()) {
+            if (!new_pswd.isEmpty()) {      //更新密码
                 if(db_demo.updateUser(id, ps, "pswd", new_pswd)) {
                     mydb.updateUser(db, id, "pswd", new_pswd);
                 }else{
