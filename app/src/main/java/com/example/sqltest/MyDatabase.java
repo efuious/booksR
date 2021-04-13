@@ -139,6 +139,7 @@ public class MyDatabase extends SQLiteOpenHelper {
 
         System.out.println("getBorrow: "+list);
         cursor.close();
+        db.close();
         return list;
     }
 
