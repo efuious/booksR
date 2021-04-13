@@ -24,6 +24,7 @@ import java.util.Map;
 public class Favorite extends Activity {
 
     private ListView favoritelist;
+    private  List<JSONObject> list = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,25 +96,58 @@ public class Favorite extends Activity {
     public void init(){
         MyDatabase mydb = new MyDatabase(this);
         SQLiteDatabase db = mydb.getReadableDatabase();
-        int userid = mydb.get_userid(db);
-        String pswd = mydb.get_pswd(db);
+        final int userid = mydb.get_userid(db);
+        final String pswd = mydb.get_pswd(db);
         db.close();
+        final Object o = new Object();
 
         if(userid == 0 || pswd.equals("")){
             Toast.makeText(this,"获取用户信息失败! 请重新登录",Toast.LENGTH_SHORT).show();
             return;
         }
 
-        DB_Demo db_demo = new DB_Demo(this);
-        List<JSONObject> list = db_demo.getFavorite(userid,pswd);
+        final DB_Demo db_demo = new DB_Demo(this);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                list = db_demo.GetFavorite(userid, pswd);
+                synchronized (o) {
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+            }};
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
         System.out.println(list);
 
         favoritelist = findViewById(R.id.favoritelist);
 
-        List<JSONObject> booklist = new LinkedList<>();
-        for(int i=0;i<list.size();i++){
-            JSONObject js = db_demo.getSearchBook("id",list.get(i).getInt("bookid")+"").get(0);
-            booklist.add(js);
+        final List<JSONObject> lists = list;
+        final List<JSONObject> booklist = new LinkedList<>();
+        for(int i=0;i<list.size();i++) {
+            final int num = i;
+            Thread thread2 = new Thread() {
+                @Override
+                public void run() {
+                    JSONObject js = db_demo.GetSearchBook("id", list.get(num).getInt("bookid") + "").get(0);
+                    booklist.add(js);
+                }
+
+            };
+            try {
+                thread2.start();
+                synchronized (o) {
+                    o.wait(100);
+                }
+            } catch (Exception e) {
+                System.out.println("子线程2错误！");
+            }
         }
         favoriteList(list,booklist,favoritelist);
     }

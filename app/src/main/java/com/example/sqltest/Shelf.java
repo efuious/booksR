@@ -1,6 +1,7 @@
 package com.example.sqltest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -32,22 +33,43 @@ public class Shelf extends Activity {
     }
 
     public void Init(){
-        DB_Demo mydb = new DB_Demo(this);
-        List<JSONObject> list =  mydb.get_table("param1=getTag");
-
-        childs = new String[list.size()][];
-        for(int i=0;i<list.size();i++){
-            childs[i] =list.get(i).getString("subTag").split(" ");// item;
-        }
-        String[] parents = new String[list.size()];
-        for (int j=0;j<list.size();j++) {
-            parents[j] = list.get(j).getString("mainTag");
-        }
-
-        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,parents,childs);
-
+        final DB_Demo mydb = new DB_Demo(this);
         tagList = findViewById(R.id.shelflist);
-        tagList.setAdapter(adapter);
+        final Context t = this;
+        final Object o = new Object();
+        final ExpandableListviewAdapter[] adapter = new ExpandableListviewAdapter[1];
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                List<JSONObject> list =  mydb.Get_table("param1=getTag");
+
+                childs = new String[list.size()][];
+                for(int i=0;i<list.size();i++){
+                    childs[i] =list.get(i).getString("subTag").split(" ");// item;
+                }
+                String[] parents = new String[list.size()];
+                for (int j=0;j<list.size();j++) {
+                    parents[j] = list.get(j).getString("mainTag");
+                }
+
+                adapter[0] =new ExpandableListviewAdapter(t,parents,childs);
+                synchronized (o){
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+            }
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+            tagList.setAdapter(adapter[0]);
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+
+
 
         tagList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override

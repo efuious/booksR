@@ -26,9 +26,27 @@ public class Newest extends Activity {
 
     public void init(){
         System.out.println("最近上新");
+        final Object o = new Object();
 
-        DB_Demo db =  new DB_Demo(this);
-        list =  db.getSearchBook("title","");
+        final DB_Demo db =  new DB_Demo(this);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                list = db.GetSearchBook("title", "");
+                synchronized (o){
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+            }
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
         Collections.reverse(list);
         bookList = findViewById(R.id.newest_booklist);
         new Whale().DoWork(this,list ,bookList);

@@ -169,65 +169,82 @@ public class DB_Demo {
         }
     }
 
-    public List<JSONObject>getFavorite(int userid, String pswd){
-        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getFavorite&param2="+userid+"&param3="+pswd;
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _gettable(strUrl);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
-        System.out.println("全局变量："+data);
+    public  List<JSONObject>GetFavorite(int userid, String pswd) {
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getFavorite&param2=" + userid + "&param3=" + pswd;
+        _gettable(strUrl);
         return jsonObject;
     }
+
+//    public List<JSONObject>getFavorite(int userid, String pswd){
+//        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getFavorite&param2="+userid+"&param3="+pswd;
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _gettable(strUrl);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        System.out.println("全局变量："+data);
+//        return jsonObject;
+//    }
+
+    public List<JSONObject>GetSearchBook(String colName, String value) {
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2=" + colName + "&param3=" + value;
+        _gettable(strUrl);
+        return jsonObject;
+    }
+
 
     //用于获取book
-    public List<JSONObject>getSearchBook(String colName, String value){
-        final String strUrl="http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2="+colName+"&param3="+value;
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _gettable(strUrl);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
-        System.out.println("全局变量："+data);
+//    public List<JSONObject>getSearchBook(String colName, String value){
+//        final String strUrl="http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2="+colName+"&param3="+value;
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _gettable(strUrl);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        System.out.println("全局变量："+data);
+//        return jsonObject;
+//    }
+
+    public List<JSONObject>Get_table(String sqlmode) {
+        String strUrl = "http://10.253.6.251:8080/whale/test?" + sqlmode;
+        _gettable(strUrl);
         return jsonObject;
     }
-
-
     // 用于获取recommend类
-    public List<JSONObject>get_table(String sqlmode){
-        final String strUrl="http://10.253.6.251:8080/whale/test?"+sqlmode;
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _gettable(strUrl);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
-        System.out.println("全局变量："+data);
-        return jsonObject;
-    }
+//    public List<JSONObject>get_table(String sqlmode){
+//        final String strUrl="http://10.253.6.251:8080/whale/test?"+sqlmode;
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _gettable(strUrl);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        System.out.println("全局变量："+data);
+//        return jsonObject;
+//    }
 
     private void  _gettable(String strUrl){
         System.out.println("开始连接");
@@ -256,72 +273,78 @@ public class DB_Demo {
     }
 
     // 用于获取history类
-    public List<String> get_data(String sqlmode){
-        final String mode = sqlmode;
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _getdata(mode);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
-        System.out.println("全局变量："+data);
-        return data;
-    }
+//    public List<String> get_data(String sqlmode){
+//        final String mode = sqlmode;
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _getdata(mode);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        System.out.println("全局变量："+data);
+//        return data;
+//    }
 
-    private void _getdata(String mode) {
-        System.out.println("开始连接");
-        String strUrl="http://10.253.6.251:8080/whale/test?"+mode;
-        System.out.println(strUrl);
-        URL url = null;
-        try{
-            url=new URL(strUrl);
-            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
-            BufferedReader br = new BufferedReader(in);
-            String result = "";
-            String readLine = null;
-            System.out.println("开始解析内容...");
-            while((readLine=br.readLine())!=null){
-                result=readLine+"\n";
-                data.add(result);
-                System.out.println(readLine);
-            }
-            in.close();
-            urlConnection.disconnect();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void _getdata(String mode) {
+//        System.out.println("开始连接");
+//        String strUrl="http://10.253.6.251:8080/whale/test?"+mode;
+//        System.out.println(strUrl);
+//        URL url = null;
+//        try{
+//            url=new URL(strUrl);
+//            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+//            InputStreamReader in = new InputStreamReader(urlConnection.getInputStream());
+//            BufferedReader br = new BufferedReader(in);
+//            String result = "";
+//            String readLine = null;
+//            System.out.println("开始解析内容...");
+//            while((readLine=br.readLine())!=null){
+//                result=readLine+"\n";
+//                data.add(result);
+//                System.out.println(readLine);
+//            }
+//            in.close();
+//            urlConnection.disconnect();
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public boolean get_user(String id, String pswd){
-        System.out.println("开始获取用户数据...");
-        final String loginId = id;
-        final String loginPswd = pswd;
-
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _getuser(loginId,loginPswd);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
+    public boolean Get_user(String id, String pswd){
+        System.out.println("开始获取用户...");
+        _getuser(id,pswd);
         return loginFlag;
     }
+
+//    public boolean get_user(String id, String pswd){
+//        System.out.println("开始获取用户数据...");
+//        final String loginId = id;
+//        final String loginPswd = pswd;
+//
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _getuser(loginId,loginPswd);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        return loginFlag;
+//    }
 
     private void _getuser(String id, String pswd){
         loginFlag = false;

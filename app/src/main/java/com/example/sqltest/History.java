@@ -28,12 +28,30 @@ public class    History extends Activity {
         article = findViewById(R.id.history_article);
 
         System.out.println("开始读取history数据表");
-        DB_Demo db = new DB_Demo(this);
-        List<JSONObject> list = db.get_table("param1=getHistory");
-        if (list.size() != 0) {
-            date.setText(list.get(0).getString("id"));
-            title.setText(list.get(0).getString("title"));
-            article.setText(list.get(0).getString("article"));
+        final DB_Demo db = new DB_Demo(this);
+        final Object o = new Object();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+            List<JSONObject> list = db.Get_table("param1=getHistory");
+            if (list.size() != 0) {
+                date.setText(list.get(0).getString("id"));
+                title.setText(list.get(0).getString("title"));
+                article.setText(list.get(0).getString("article"));
+            }
+            synchronized (o){
+                System.out.println("等待中...");
+                o.notify();
+            }
+            }
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
         }
     }
 }

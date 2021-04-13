@@ -55,8 +55,26 @@ public class SearchPage extends Activity implements View.OnClickListener {
             System.out.println("选择作者");
             col +=  "author";
         }
-        DB_Demo db = new DB_Demo(this);
-        string = db.getSearchBook(col, input_search.getText().toString());
+        final DB_Demo db = new DB_Demo(this);
+        final Object o = new Object();
+        final String colname  = col;
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                string = db.GetSearchBook(colname, input_search.getText().toString());
+                synchronized (o) {
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+            }};
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(2000);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
     }
 
     public void init(String value) {

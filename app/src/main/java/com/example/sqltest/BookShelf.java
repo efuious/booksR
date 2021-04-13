@@ -25,14 +25,32 @@ public class BookShelf extends Activity {
         init(intent.getStringExtra("tag"));
     }
 
-    public void init(String tag){
+    public void init(final String tag){
         System.out.println("进入BookShelf页");
 
         System.out.println("开始读取BookShelf数据表");
-        DB_Demo db =  new DB_Demo(this);
-        string =  db.get_table("param1=getSearchBook&param2=tag2&param3="+tag);
+        final DB_Demo db =  new DB_Demo(this);
+        final Object o = new Object();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                string =  db.Get_table("param1=getSearchBook&param2=tag2&param3="+tag);
+                synchronized (o) {
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+             }
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
         bookList = findViewById(R.id.bs_booklist);
-
+        System.out.println("子线执行中...");
         Whale w = new Whale();
         w.DoWork(this,string,bookList);
     }

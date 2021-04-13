@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import net.sf.json.JSONObject;
 
@@ -23,6 +24,7 @@ public class Recommend extends Activity {
 
     private  List<JSONObject> string = new LinkedList<>();
     private ListView recommendList;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +76,32 @@ public class Recommend extends Activity {
         });
     }
 
-    public void init(String table){
+    public void init(final String table){
+        title = findViewById(R.id.r_title);
+        title.setText(table);
+        final Object o = new Object();
+        recommendList = findViewById(R.id.userlist);
         System.out.println("进入ita页");
 
-        System.out.println("开始读取ita数据表");
-        DB_Demo db =  new DB_Demo(this);
-        string =  db.get_table("param1=getIta&param2="+table);
-        recommendList = findViewById(R.id.userlist);
+        System.out.println("开始读取数据表: "+table);
+        final DB_Demo db =  new DB_Demo(this);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                string =  db.Get_table("param1=getIta&param2="+table);
+                synchronized (o){
+                    System.out.println("等待中...");
+                    o.notify();
+                }
+            }
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
     }
 }

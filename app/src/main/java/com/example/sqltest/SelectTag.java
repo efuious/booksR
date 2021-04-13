@@ -1,6 +1,7 @@
 package com.example.sqltest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -45,35 +46,53 @@ public class SelectTag extends Activity {
     }
 
     public void Init(){
-        DB_Demo mydb = new DB_Demo(this);
-        List<JSONObject> list = mydb.get_table("param1=getTag");
-
-        childs = new String[list.size()][];
-        for(int i=0;i<list.size();i++){
-            childs[i] =list.get(i).getString("subTag").split(" ");// item;
-        }
-        String[] parents = new String[list.size()];
-        for (int j=0;j<list.size();j++) {
-            parents[j] = list.get(j).getString("mainTag");
-        }
-
-        ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(this,parents,childs);
-
-        tagList = findViewById(R.id.selectTaglist);
-        tagList.setAdapter(adapter);
-
-        tagList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        final DB_Demo mydb = new DB_Demo(this);
+        final Context t = this;
+        final Object o = new Object();
+        Thread thread = new Thread(){
             @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                System.out.println("点击事件");
-                try {
-                    getClick(groupPosition,childPosition);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    return false;
+            public void run() {
+                List<JSONObject> list = mydb.Get_table("param1=getTag");
+                childs = new String[list.size()][];
+                for(int i=0;i<list.size();i++){
+                    childs[i] =list.get(i).getString("subTag").split(" ");// item;
                 }
-                return true;
+                String[] parents = new String[list.size()];
+                for (int j=0;j<list.size();j++) {
+                    parents[j] = list.get(j).getString("mainTag");
+                }
+                ExpandableListviewAdapter adapter=new ExpandableListviewAdapter(t,parents,childs);
+
+                tagList = findViewById(R.id.selectTaglist);
+                tagList.setAdapter(adapter);
+
+                tagList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                    @Override
+                    public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                        System.out.println("点击事件");
+                        try {
+                            getClick(groupPosition,childPosition);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                        return true;
+                    }
+                });
+                synchronized (o){
+                    System.out.println("等待中...");
+                    o.notify();
+                }
             }
-        });
+        };
+        try{
+            thread.start();
+            synchronized (o){
+                o.wait(100);
+            }
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程执行中...");
     }
 }
