@@ -34,14 +34,14 @@
             android:layout_height="30dp"
             android:layout_width="0dp"
             android:textSize="16sp"
-            android:layout_weight="5" />
+            android:layout_weight="4" />
 
             <TextView
                 android:id="@+id/ba_publish"
                 android:layout_height="30dp"
                 android:layout_width="0dp"
                 android:textSize="16sp"
-                android:layout_weight="5" />
+                android:layout_weight="6" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

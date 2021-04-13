@@ -8,6 +8,7 @@
     tools:context=".Recommend">
 
     <TextView
+        android:id="@+id/r_title"
         android:layout_height="@dimen/head"
         android:layout_width="match_parent"
         android:textAlignment="textStart"
