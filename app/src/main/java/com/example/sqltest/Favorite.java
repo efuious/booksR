@@ -76,11 +76,25 @@ public class Favorite extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println("删除成功！");
-                        DB_Demo db_demo = new DB_Demo(Favorite.this);
-                        boolean status = false;
-                        status = db_demo.deleteFavorite(list.get(position).getInt("id"));
-                        if (status){
-                            onRestart();
+                        final DB_Demo db_demo = new DB_Demo(Favorite.this);
+                        final Object o = new Object();
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                boolean status = false;
+                                status = db_demo.DeleteFavorite(list.get(position).getInt("id"));
+                                if (status) {
+                                    onRestart();
+                                }
+                            }
+                        };
+                        try {
+                            thread.start();
+                            synchronized (o) {
+                                o.wait(100);
+                            }
+                        } catch (Exception e) {
+                            System.out.println("子线程错误！");
                         }
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {

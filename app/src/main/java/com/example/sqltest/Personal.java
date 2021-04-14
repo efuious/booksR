@@ -21,7 +21,7 @@ public class Personal extends Activity implements View.OnClickListener {
     ImageButton book1, book2, book3, book4, book5,book6;
     TextView text1, text2, text3, text4, text5,text6;
     List<JSONObject> personal;
-    private boolean netFlag = true;
+    private boolean netFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,7 @@ public class Personal extends Activity implements View.OnClickListener {
                     netFlag = false;
                     return;
                 }
+                netFlag = true;
                 Collections.reverse(booklist);
                 MyDatabase mydb = new MyDatabase(t);
                 SQLiteDatabase db = mydb.getReadableDatabase();

@@ -29,25 +29,33 @@ public class DB_Demo {
         System.out.println("初始化数据库模型...MyDatabase");
     }
 
-    public boolean register(String name,int sex, String birthday, String pswd) throws UnsupportedEncodingException {
-        String encode_name = java.net.URLEncoder.encode(name,"utf-8");
-        final String strUrl="http://10.253.6.251:8080/whale/test?param1=register&param2="+encode_name+"&param3="+pswd.trim()+"&param4="+sex+"&param5="+birthday;
-        System.out.println("register执行命令："+strUrl);
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _updateUser(strUrl);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
+    public boolean Register(String name,int sex, String birthday, String pswd) throws UnsupportedEncodingException {
+        String encode_name = java.net.URLEncoder.encode(name, "utf-8");
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=register&param2=" + encode_name + "&param3=" + pswd.trim() + "&param4=" + sex + "&param5=" + birthday;
+        System.out.println("register执行命令：" + strUrl);
+        _updateUser(strUrl);
         return updateFlag;
     }
+
+//    public boolean register(String name,int sex, String birthday, String pswd) throws UnsupportedEncodingException {
+//        String encode_name = java.net.URLEncoder.encode(name,"utf-8");
+//        final String strUrl="http://10.253.6.251:8080/whale/test?param1=register&param2="+encode_name+"&param3="+pswd.trim()+"&param4="+sex+"&param5="+birthday;
+//        System.out.println("register执行命令："+strUrl);
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _updateUser(strUrl);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        return updateFlag;
+//    }
 
     public String addFavorite(String userid,String pswd, String bookid){
         final String strUrl = "http://10.253.6.251:8080/whale/test?param1=addFavorite&param2="+userid+"&param3="+pswd+"&param4="+bookid;
@@ -70,26 +78,34 @@ public class DB_Demo {
         return msg;
     }
 
-    public boolean deleteFavorite(int id) {
-        String message = id+"";
-        final String strUrl="http://10.253.6.251:8080/whale/test?param1=deleteData&param2="+message;
-        System.out.println("deleteFavorite执行命令："+strUrl);
-        Thread thread = new Thread(){
-            @Override
-            public void run() {
-                _updateUser(strUrl);
-            }
-        };
-        try{
-            thread.start();
-            thread.join();
-        }catch (Exception e){
-            System.out.println("子线程错误！");
-        }
-        System.out.println("子线程结束");
-        System.out.println("全局变量："+data);
+    public boolean DeleteFavorite(int id) {
+        String message = id + "";
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=deleteData&param2=" + message;
+        System.out.println("deleteFavorite执行命令：" + strUrl);
+        _updateUser(strUrl);
         return updateFlag;
     }
+
+//    public boolean deleteFavorite(int id) {
+//        String message = id+"";
+//        final String strUrl="http://10.253.6.251:8080/whale/test?param1=deleteData&param2="+message;
+//        System.out.println("deleteFavorite执行命令："+strUrl);
+//        Thread thread = new Thread(){
+//            @Override
+//            public void run() {
+//                _updateUser(strUrl);
+//            }
+//        };
+//        try{
+//            thread.start();
+//            thread.join();
+//        }catch (Exception e){
+//            System.out.println("子线程错误！");
+//        }
+//        System.out.println("子线程结束");
+//        System.out.println("全局变量："+data);
+//        return updateFlag;
+//    }
 
 
     public boolean updateUser(int userid,String pswd,String tagn, String value) throws UnsupportedEncodingException {
