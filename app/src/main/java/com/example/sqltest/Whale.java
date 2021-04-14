@@ -113,7 +113,7 @@ public class Whale {
                             case "failed":
                                 Toast.makeText(context,"请先登录！",Toast.LENGTH_SHORT).show();break;
                             default:
-                            Toast.makeText(context,"加入收藏夹失败！",Toast.LENGTH_SHORT).show();break;
+                                Toast.makeText(context,"加入收藏夹失败！",Toast.LENGTH_SHORT).show();break;
                         }
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
