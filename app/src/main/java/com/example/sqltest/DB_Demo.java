@@ -78,34 +78,34 @@ public class DB_Demo {
         return msg;
     }
 
-    public boolean DeleteFavorite(int id) {
-        String message = id + "";
-        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=deleteData&param2=" + message;
-        System.out.println("deleteFavorite执行命令：" + strUrl);
-        _updateUser(strUrl);
-        return updateFlag;
-    }
-
-//    public boolean deleteFavorite(int id) {
-//        String message = id+"";
-//        final String strUrl="http://10.253.6.251:8080/whale/test?param1=deleteData&param2="+message;
-//        System.out.println("deleteFavorite执行命令："+strUrl);
-//        Thread thread = new Thread(){
-//            @Override
-//            public void run() {
-//                _updateUser(strUrl);
-//            }
-//        };
-//        try{
-//            thread.start();
-//            thread.join();
-//        }catch (Exception e){
-//            System.out.println("子线程错误！");
-//        }
-//        System.out.println("子线程结束");
-//        System.out.println("全局变量："+data);
+//    public boolean DeleteFavorite(int id) {
+//        String message = id + "";
+//        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=deleteData&param2=" + message;
+//        System.out.println("deleteFavorite执行命令：" + strUrl);
+//        _updateUser(strUrl);
 //        return updateFlag;
 //    }
+
+    public boolean deleteFavorite(int id) {
+        String message = id+"";
+        final String strUrl="http://10.253.6.251:8080/whale/test?param1=deleteData&param2="+message;
+        System.out.println("deleteFavorite执行命令："+strUrl);
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _updateUser(strUrl);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+        return updateFlag;
+    }
 
 
     public boolean updateUser(int userid,String pswd,String tagn, String value) throws UnsupportedEncodingException {
@@ -191,24 +191,24 @@ public class DB_Demo {
         return jsonObject;
     }
 
-//    public List<JSONObject>getFavorite(int userid, String pswd){
-//        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getFavorite&param2="+userid+"&param3="+pswd;
-//        Thread thread = new Thread(){
-//            @Override
-//            public void run() {
-//                _gettable(strUrl);
-//            }
-//        };
-//        try{
-//            thread.start();
-//            thread.join();
-//        }catch (Exception e){
-//            System.out.println("子线程错误！");
-//        }
-//        System.out.println("子线程结束");
-//        System.out.println("全局变量："+data);
-//        return jsonObject;
-//    }
+    public List<JSONObject>getFavorite(int userid, String pswd){
+        final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getFavorite&param2="+userid+"&param3="+pswd;
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _gettable(strUrl);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+        return jsonObject;
+    }
 
     public List<JSONObject>GetSearchBook(String colName, String value) {
         final String strUrl = "http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2=" + colName + "&param3=" + value;
@@ -218,24 +218,24 @@ public class DB_Demo {
 
 
     //用于获取book
-//    public List<JSONObject>getSearchBook(String colName, String value){
-//        final String strUrl="http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2="+colName+"&param3="+value;
-//        Thread thread = new Thread(){
-//            @Override
-//            public void run() {
-//                _gettable(strUrl);
-//            }
-//        };
-//        try{
-//            thread.start();
-//            thread.join();
-//        }catch (Exception e){
-//            System.out.println("子线程错误！");
-//        }
-//        System.out.println("子线程结束");
-//        System.out.println("全局变量："+data);
-//        return jsonObject;
-//    }
+    public List<JSONObject>getSearchBook(String colName, String value){
+        final String strUrl="http://10.253.6.251:8080/whale/test?param1=getSearchBook&param2="+colName+"&param3="+value;
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                _gettable(strUrl);
+            }
+        };
+        try{
+            thread.start();
+            thread.join();
+        }catch (Exception e){
+            System.out.println("子线程错误！");
+        }
+        System.out.println("子线程结束");
+        System.out.println("全局变量："+data);
+        return jsonObject;
+    }
 
     public List<JSONObject>Get_table(String sqlmode) {
         String strUrl = "http://10.253.6.251:8080/whale/test?" + sqlmode;

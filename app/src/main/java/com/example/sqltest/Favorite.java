@@ -36,7 +36,7 @@ public class Favorite extends Activity {
 
     protected void onRestart() {
         super.onRestart();
-        init();
+        Favorite.this.init();
     }
 
     public void favoriteList(final List<JSONObject> list, List<JSONObject> strings , ListView table) {
@@ -78,24 +78,24 @@ public class Favorite extends Activity {
                         System.out.println("删除成功！");
                         final DB_Demo db_demo = new DB_Demo(Favorite.this);
                         final Object o = new Object();
-                        Thread thread = new Thread() {
-                            @Override
-                            public void run() {
+//                        Thread thread = new Thread() {
+//                            @Override
+//                            public void run() {
                                 boolean status = false;
-                                status = db_demo.DeleteFavorite(list.get(position).getInt("id"));
+                                status = db_demo.deleteFavorite(list.get(position).getInt("id"));
                                 if (status) {
                                     onRestart();
                                 }
-                            }
-                        };
-                        try {
-                            thread.start();
-                            synchronized (o) {
-                                o.wait(100);
-                            }
-                        } catch (Exception e) {
-                            System.out.println("子线程错误！");
-                        }
+//                            }
+//                        };
+//                        try {
+//                            thread.start();
+//                            synchronized (o) {
+//                                o.wait(500);
+//                            }
+//                        } catch (Exception e) {
+//                            System.out.println("子线程0错误！");
+//                        }
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -133,16 +133,15 @@ public class Favorite extends Activity {
         try{
             thread.start();
             synchronized (o){
-                o.wait(100);
+                o.wait(200);
             }
         }catch (Exception e){
-            System.out.println("子线程错误！");
+            System.out.println("子线程1错误！");
         }
         System.out.println(list);
 
         favoritelist = findViewById(R.id.favoritelist);
 
-        final List<JSONObject> lists = list;
         final List<JSONObject> booklist = new LinkedList<>();
         for(int i=0;i<list.size();i++) {
             final int num = i;
@@ -151,8 +150,11 @@ public class Favorite extends Activity {
                 public void run() {
                     JSONObject js = db_demo.GetSearchBook("id", list.get(num).getInt("bookid") + "").get(0);
                     booklist.add(js);
+                    synchronized (o) {
+                        System.out.println("等待中...");
+                        o.notify();
+                    }
                 }
-
             };
             try {
                 thread2.start();
