@@ -88,7 +88,7 @@ public class SelectTag extends Activity {
         try{
             thread.start();
             synchronized (o){
-                o.wait(100);
+                o.wait(300);
             }
         }catch (Exception e){
             System.out.println("子线程错误！");

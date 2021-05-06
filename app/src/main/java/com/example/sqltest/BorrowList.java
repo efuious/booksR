@@ -85,7 +85,7 @@ public class BorrowList extends Activity {
             System.out.println("开始子线程...");
             thread.start();
             synchronized (o){
-                o.wait(100);
+                o.wait(300);
             }
         }catch (Exception e){
             System.out.println("子线程错误！");
